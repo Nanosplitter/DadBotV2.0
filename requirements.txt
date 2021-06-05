@@ -7,3 +7,4 @@ mysql-connector
 dateparser
 pytz
 requests
+aiofiles

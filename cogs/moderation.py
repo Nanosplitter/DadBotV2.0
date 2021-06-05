@@ -60,20 +60,22 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="nick")
     @commands.has_permissions(manage_nicknames=True)
     async def nick(self, context, member: discord.Member, *, name: str):
+        print(name)
         """
         Change the nickname of a user on a server.
         """
         try:
             if name.lower() == "!reset":
                 name = None
-            await member.change_nickname(name)
+            await member.edit(nick=name)
             embed = discord.Embed(
                 title="Changed Nickname!",
                 description=f"**{member}'s** new nickname is **{name}**!",
                 color=config["success"]
             )
             await context.send(embed=embed)
-        except:
+        except Exception as e:
+            print(e)
             embed = discord.Embed(
                 title="Error!",
                 description="An error occurred while trying to change the nickname of the user.",
