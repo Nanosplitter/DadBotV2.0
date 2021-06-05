@@ -12,6 +12,8 @@ build/
 develop-eggs/
 dist/
 downloads/
+cogs/__pycache__
+noncommands/__pycache__
 eggs/
 .eggs/
 lib/

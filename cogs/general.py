@@ -38,7 +38,7 @@ class general(commands.Cog, name="general"):
         Get some useful (or not) information about the bot.
         """
         embed = discord.Embed(
-            description="Used Krypton's template",
+            description="The server's dad",
             color=config["success"]
         )
         embed.set_author(
@@ -46,7 +46,7 @@ class general(commands.Cog, name="general"):
         )
         embed.add_field(
             name="Owner:",
-            value="Krypton#2188",
+            value="Nanosplitter#4549",
             inline=True
         )
         embed.add_field(
