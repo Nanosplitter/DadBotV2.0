@@ -121,7 +121,7 @@ class moderation(commands.Cog, name="moderation"):
     @commands.has_permissions(manage_messages=True)
     async def warn(self, context, member: discord.Member, *args):
         """
-        Warns a user in his private messages.
+        Warns a user in their private messages.
         """
         reason = " ".join(args)
         embed = discord.Embed(
