@@ -154,3 +154,5 @@ cython_debug/
 newperson.png
 *.pyc
 */*.pyc
+config-main.yaml
+config-test.yaml
