@@ -12,6 +12,7 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 import requests
 import uuid
+import inspirobot
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -57,6 +58,15 @@ class Fun(commands.Cog, name="fun"):
             await context.reply(random.choice(json["results"])["joke"])
         except:
             await context.reply("I don't think I've heard a good one about that yet. Try something else.")
+    
+    @commands.command(name="inspire")
+    async def inspire(self, context, searchTerm="", *args):
+        """
+        Get an inspirational poster courtesy of https://inspirobot.me/
+        """
+        quote = inspirobot.generate()
+        await context.reply(quote.url)
+
 
     @commands.command(name="advice")
     async def advice(self, context):

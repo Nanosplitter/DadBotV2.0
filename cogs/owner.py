@@ -43,7 +43,9 @@ class owner(commands.Cog, name="owner"):
         The bot will say anything you want.
         """
         if context.message.author.id in config["owners"]:
+            await context.message.delete()
             await context.send(args)
+            
         else:
             embed = discord.Embed(
                 title="Error!",
