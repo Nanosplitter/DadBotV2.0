@@ -60,13 +60,24 @@ class Fun(commands.Cog, name="fun"):
             await context.reply("I don't think I've heard a good one about that yet. Try something else.")
     
     @commands.command(name="inspire")
-    async def inspire(self, context, searchTerm="", *args):
+    async def inspire(self, context):
         """
         Get an inspirational poster courtesy of https://inspirobot.me/
         """
         quote = inspirobot.generate()
         await context.reply(quote.url)
-
+    
+    @commands.command(name="wisdom")
+    async def wisdom(self, context):
+        """
+        Get an inspirational poster courtesy of https://inspirobot.me/
+        """
+        flow = inspirobot.flow()  # Generate a flow object
+        res = ""
+        for quote in flow:
+            res += quote.text + "\n"
+        
+        await context.reply(res)
 
     @commands.command(name="advice")
     async def advice(self, context):
