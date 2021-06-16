@@ -70,7 +70,7 @@ class Fun(commands.Cog, name="fun"):
     @commands.command(name="wisdom")
     async def wisdom(self, context):
         """
-        Get an inspirational poster courtesy of https://inspirobot.me/
+        Get some wisdom courtesy of https://inspirobot.me/
         """
         flow = inspirobot.flow()  # Generate a flow object
         res = ""
