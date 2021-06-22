@@ -5,6 +5,7 @@ import sys
 import re
 from noncommands import imchecker
 from noncommands import reminderLoop
+from noncommands import antimayhem
 
 import discord
 import yaml
@@ -23,6 +24,7 @@ bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
 
 imChecker = imchecker.ImChecker()
 reminderChecker = reminderLoop.ReminderLoop()
+antiMayhem = antimayhem.AntiMayhem()
 
 # The code in this even is executed when the bot is ready
 @bot.event
@@ -69,6 +71,8 @@ async def on_message(message):
         return
     
     await imChecker.checkIm(message)
+
+    await antiMayhem.gotem(message)
 
     await bot.process_commands(message)
 
