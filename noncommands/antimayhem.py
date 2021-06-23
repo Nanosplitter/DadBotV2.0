@@ -15,6 +15,7 @@ else:
 
 class AntiMayhem:
     async def gotem(self, context):
+        # Only reply to a specific user
         if context.author.id == 342927159968399370 and random.choice(range(20)) == 5:
             url = "https://evilinsult.com/generate_insult.php?lang=en&type=json"
             r = requests.get(url)
