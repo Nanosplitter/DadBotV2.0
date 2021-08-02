@@ -4,6 +4,7 @@ import yaml
 import sys
 import os
 import mysql.connector
+import random
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -28,7 +29,7 @@ class ImChecker:
             r = re.compile(cpattern)
             fake_string = " " + message.content
             res = r.match(fake_string)
-            if res:
+            if res and random.randint(0, 9) == 3:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
             
