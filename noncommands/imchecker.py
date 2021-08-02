@@ -30,7 +30,8 @@ class ImChecker:
             fake_string = " " + message.content
             res = r.match(fake_string)
             rand = random.randint(0, 9)
-            print("Caught, rand is", rand)
+            if res:
+                print("Caught, rand is", rand)
             if res and rand == 3:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
