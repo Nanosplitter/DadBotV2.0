@@ -215,7 +215,7 @@ class general(commands.Cog, name="general"):
                    'My sources say no.', 'Outlook not so good.', 'Very doubtful.']
         embed = discord.Embed(
             title="**My Answer:**",
-            description=f"{answers[random.randint(0, len(answers))]}",
+            description=f"{answers[random.randint(0, len(answers) - 1)]}",
             color=config["success"]
         )
         embed.set_footer(
