@@ -198,6 +198,13 @@ class Fun(commands.Cog, name="fun"):
         await context.send("", file=file)
         os.remove(fileName)
     
+    @commands.command(name="drawerpc")
+    async def newperson(self, context):
+        """
+        Replies with "DRAWER PC DRAWER PC"
+        """
+        await context.send("DRAWER PC DRAWER PC")
+        
     @commands.command(name="newcat")
     async def newcat(self, context):
         """

@@ -114,6 +114,12 @@ async def on_command_error(context, error):
 async def checkReminders():
     await reminderChecker.checkReminders(bot)
 
+@tasks.loop(hours=12)
+async def drawerPcKeepAlive():
+    client = discord.Client()
+    channel = client.get_channel(662868528629547009)
+    await channel.send('DRAWER PC DRAWER PC')
+
 checkReminders.start()
 # Run the bot with the token
 bot.run(config["token"])
