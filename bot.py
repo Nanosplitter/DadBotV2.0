@@ -116,9 +116,12 @@ async def checkReminders():
 
 @tasks.loop(hours=12)
 async def drawerPcKeepAlive():
-    client = discord.Client()
-    channel = client.get_channel(662868528629547009)
-    await channel.send('DRAWER PC DRAWER PC')
+    try:
+        client = discord.Client()
+        channel = client.get_channel(662868528629547009)
+        await channel.send('DRAWER PC DRAWER PC')
+    except:
+        pass
 
 checkReminders.start()
 # Run the bot with the token
