@@ -34,7 +34,7 @@ class ImChecker:
                 print("Caught, rand is", rand)
             if res and rand == 3:
                 typeIm = res.group().strip() + " "
-                await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
+                await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad", tts=True)
             
                 mycursor = self.mydb.cursor(buffered=True)
 
