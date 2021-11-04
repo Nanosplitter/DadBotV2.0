@@ -15,12 +15,12 @@ else:
 class ImChecker:
     def __init__(self):
         self.imList = [" im ", " i'm ", " Im ", " I'm ", " IM ", " I'M ", " i am ", " I am ", " I AM ", " lm ", " l'm ", " lM ", " l'M ", " l am ", " l AM "]
-        self.mydb = mysql.connector.connect(
-            host=config["dbhost"],
-            user=config["dbuser"],
-            password=config["dbpassword"],
-            database=config["databasename"]
-        )
+        # self.mydb = mysql.connector.connect(
+        #     host=config["dbhost"],
+        #     user=config["dbuser"],
+        #     password=config["dbpassword"],
+        #     database=config["databasename"]
+        # )
         self.confusables = Confusables('./resources/likeness.txt')
 
     async def checkIm(self, message):
@@ -36,23 +36,23 @@ class ImChecker:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad", tts=True)
             
-                mycursor = self.mydb.cursor(buffered=True)
+                # mycursor = self.mydb.cursor(buffered=True)
 
-                mycursor.execute("SELECT * FROM freemarketcaught WHERE user = '" + str(message.author) + "'")
-                hascolumn = False
-                for m in mycursor:
-                    print("Found caught column")
-                    print(m)
-                    hascolumn = True
+                # mycursor.execute("SELECT * FROM freemarketcaught WHERE user = '" + str(message.author) + "'")
+                # hascolumn = False
+                # for m in mycursor:
+                #     print("Found caught column")
+                #     print(m)
+                #     hascolumn = True
 
-                if not hascolumn:
-                    print("Adding caught column")
-                    mycursor.execute("INSERT INTO freemarketcaught (user, caught) VALUES ('"+ str(message.author) +"', 1)")
-                else:
-                    print("Updating caught column")
-                    mycursor.execute("UPDATE freemarketcaught SET caught = caught + 1 WHERE user = '" + str(message.author) + "'")
+                # if not hascolumn:
+                #     print("Adding caught column")
+                #     mycursor.execute("INSERT INTO freemarketcaught (user, caught) VALUES ('"+ str(message.author) +"', 1)")
+                # else:
+                #     print("Updating caught column")
+                #     mycursor.execute("UPDATE freemarketcaught SET caught = caught + 1 WHERE user = '" + str(message.author) + "'")
 
-                self.mydb.commit()
+                # self.mydb.commit()
                 break
 
 class Confusables:
