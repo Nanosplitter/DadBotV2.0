@@ -70,7 +70,7 @@ async def on_message(message):
     if message.author.id in config["blacklist"]:
         return
     
-    await imChecker.checkIm(message)
+    # await imChecker.checkIm(message)
 
     await antiMayhem.gotem(message)
 

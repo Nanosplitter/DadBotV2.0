@@ -3,7 +3,7 @@ import os
 import platform
 import random
 import sys
-import mysql.connector
+# import mysql.connector
 import dateparser as dp
 import pytz
 import datetime
@@ -25,12 +25,12 @@ else:
 class general(commands.Cog, name="general"):
     def __init__(self, bot):
         self.bot = bot
-        self.mydb = mysql.connector.connect(
-            host=config["dbhost"],
-            user=config["dbuser"],
-            password=config["dbpassword"],
-            database=config["databasename"]
-        )
+        # self.mydb = mysql.connector.connect(
+        #     host=config["dbhost"],
+        #     user=config["dbuser"],
+        #     password=config["dbpassword"],
+        #     database=config["databasename"]
+        # )
 
     @commands.command(name="info", aliases=["botinfo"])
     async def info(self, context):
@@ -128,32 +128,32 @@ class general(commands.Cog, name="general"):
         )
         await context.send(embed=embed)
 
-    @commands.command(name="remindme")
-    async def remindme(self, context, *args):
-        """
-        Has DadBot remind you at a specific time. 
-        """
-        timeStr = " ".join(args).lower()
-        time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
-        timeWords = timeStr
-        f = '%Y-%m-%d %H:%M:%S'
-        if time is None:
-            searchRes = search_dates(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'}, languages=['en'])
-            for t in searchRes:
-                time = t[1]
-                timeWords = t[0]
-                break
+    # @commands.command(name="remindme")
+    # async def remindme(self, context, *args):
+    #     """
+    #     Has DadBot remind you at a specific time. 
+    #     """
+    #     timeStr = " ".join(args).lower()
+    #     time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
+    #     timeWords = timeStr
+    #     f = '%Y-%m-%d %H:%M:%S'
+    #     if time is None:
+    #         searchRes = search_dates(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'}, languages=['en'])
+    #         for t in searchRes:
+    #             time = t[1]
+    #             timeWords = t[0]
+    #             break
 
-        if time is not None:
-            timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
-        if time is not None:
-            mycursor = self.mydb.cursor(buffered=True)
-            mycursor.execute("INSERT INTO reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
+    #     if time is not None:
+    #         timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
+    #     if time is not None:
+    #         mycursor = self.mydb.cursor(buffered=True)
+    #         mycursor.execute("INSERT INTO reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
 
-            await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
-            self.mydb.commit()
-        else:
-            await context.reply("I can't understand that time, try again but differently")
+    #         await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
+    #         self.mydb.commit()
+    #     else:
+    #         await context.reply("I can't understand that time, try again but differently")
         
 
     @commands.command(name="invite")
@@ -161,28 +161,26 @@ class general(commands.Cog, name="general"):
         """
         Get the invite link of the bot to be able to invite it to another server.
         """
-        await context.send("I sent you a private message!")
-        await context.author.send(
-            f"Invite me by clicking here: https://discordapp.com/oauth2/authorize?&client_id={config.APPLICATION_ID}&scope=bot&permissions=8")
+        await context.send(f"Invite me by clicking here: https://discordapp.com/oauth2/authorize?&client_id={config.APPLICATION_ID}&scope=bot&permissions=8")
 
     
-    @commands.command(name="caught")
-    async def caught(self, context):
-        """
-        See how many times everyone on the server has been caught by DadBot.
-        """
-        mycursor = self.mydb.cursor(buffered=True)
+    # @commands.command(name="caught")
+    # async def caught(self, context):
+    #     """
+    #     See how many times everyone on the server has been caught by DadBot.
+    #     """
+    #     mycursor = self.mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT * FROM freemarketcaught ORDER BY caught DESC")
+    #     mycursor.execute("SELECT * FROM freemarketcaught ORDER BY caught DESC")
 
-        res = "```\n"
-        res += "{:38s} {:s}\n".format("Username", "Caught Count")
-        res += ("-"*51) + "\n"
-        for m in mycursor:
-            res += "{:38s} {:d}\n".format(m[1], int(m[2]))
-        res += "```"
+    #     res = "```\n"
+    #     res += "{:38s} {:s}\n".format("Username", "Caught Count")
+    #     res += ("-"*51) + "\n"
+    #     for m in mycursor:
+    #         res += "{:38s} {:d}\n".format(m[1], int(m[2]))
+    #     res += "```"
 
-        await context.send(res)
+    #     await context.send(res)
 
     @commands.command(name="poll")
     async def poll(self, context, *args):
