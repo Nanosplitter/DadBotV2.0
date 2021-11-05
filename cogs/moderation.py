@@ -82,6 +82,10 @@ class moderation(commands.Cog, name="moderation"):
                 color=config["success"]
             )
             await context.message.channel.send(embed=embed)
+    
+    @commands.command(name="clean")
+    async def clean(self, context):
+        await context.reply(":yum:")
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
