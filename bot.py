@@ -110,19 +110,19 @@ async def on_command_error(context, error):
         await context.send(embed=embed)
     raise error
 
-@tasks.loop(seconds=1)
-async def checkReminders():
-    await reminderChecker.checkReminders(bot)
+# @tasks.loop(seconds=1)
+# async def checkReminders():
+#     await reminderChecker.checkReminders(bot)
 
-@tasks.loop(hours=12)
-async def drawerPcKeepAlive():
-    try:
-        client = discord.Client()
-        channel = client.get_channel(662868528629547009)
-        await channel.send('DRAWER PC DRAWER PC')
-    except:
-        pass
+# @tasks.loop(hours=12)
+# async def drawerPcKeepAlive():
+#     try:
+#         client = discord.Client()
+#         channel = client.get_channel(662868528629547009)
+#         await channel.send('DRAWER PC DRAWER PC')
+#     except:
+#         pass
 
-checkReminders.start()
+# checkReminders.start()
 # Run the bot with the token
 bot.run(config["token"])
