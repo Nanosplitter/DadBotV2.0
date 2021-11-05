@@ -60,7 +60,6 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="nick")
     @commands.has_permissions(manage_nicknames=True)
     async def nick(self, context, member: discord.Member, *, name: str):
-        print(name)
         """
         Change the nickname of a user on a server.
         """
@@ -85,6 +84,9 @@ class moderation(commands.Cog, name="moderation"):
     
     @commands.command(name="clean")
     async def clean(self, context):
+        """
+        Solves many problems.
+        """
         await context.reply(":yum:")
 
     @commands.command(name="ban")
