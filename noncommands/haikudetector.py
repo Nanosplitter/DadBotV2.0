@@ -26,7 +26,7 @@ def sylcoOneWord(word):
 
 def sylco(words):
     res = sum([sylcoOneWord(re.sub(r'[^\w\s]', '', w).lower()) for w in words.split()])
-    print(res)
+    print(words, ":", res)
     return res
 
 
