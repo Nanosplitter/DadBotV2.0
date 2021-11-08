@@ -3,6 +3,7 @@ import platform
 import random
 import sys
 import re
+from noncommands import haikudetector
 from noncommands import imchecker
 # from noncommands import reminderLoop
 from noncommands import antimayhem
@@ -25,6 +26,7 @@ bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
 imChecker = imchecker.ImChecker()
 # reminderChecker = reminderLoop.ReminderLoop()
 antiMayhem = antimayhem.AntiMayhem()
+haikuDetector = haikudetector.HaikuDetector()
 
 # The code in this even is executed when the bot is ready
 @bot.event
@@ -74,7 +76,11 @@ async def on_message(message):
 
     await antiMayhem.gotem(message)
 
+    await haikuDetector.checkForHaiku(message)
+
     await bot.process_commands(message)
+
+
 
 
 # The code in this event is executed every time a command has been *successfully* executed
