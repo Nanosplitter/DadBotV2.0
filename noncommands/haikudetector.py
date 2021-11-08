@@ -2,7 +2,7 @@ import re
 import yaml
 import sys
 import os
-
+import cmudict
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
 else:
@@ -10,33 +10,21 @@ else:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
 
+def lookup_word(word):
+    return cmudict.dict().get(word)
 
-def sylco(word):
-    VOWEL_RUNS = re.compile("[aeiouy]+", flags=re.I)
-    EXCEPTIONS = re.compile(
-        # fixes trailing e issues:
-        # smite, scared
-        "[^aeiou]e[sd]?$|"
-        # fixes adverbs:
-        # nicely
-        + "[^e]ely$",
-        flags=re.I
-    )
-    ADDITIONAL = re.compile(
-        # fixes incorrect subtractions from exceptions:
-        # smile, scarred, raises, fated
-        "[^aeioulr][lr]e[sd]?$|[csgz]es$|[td]ed$|"
-        # fixes miscellaneous issues:
-        # flying, piano, video, prism, fire, evaluate
-        + ".y[aeiou]|ia(?!n$)|eo|ism$|[^aeiou]ire$|[^gq]ua",
-        flags=re.I
-    )
+def sylcoOneWord(word):
+    count = 0
+    phones = lookup_word(word) # this returns a list of matching phonetic rep's
+    if phones:                   # if the list isn't empty (the word was found)
+        phones0 = phones[0]      #     process the first
+        count = len([p for p in phones0 if p[-1].isdigit()]) # count the vowels
+    return count
 
-    vowel_runs = len(VOWEL_RUNS.findall(word))
-    exceptions = len(EXCEPTIONS.findall(word))
-    additional = len(ADDITIONAL.findall(word))
-    return max(1, vowel_runs - exceptions + additional)
-
+def sylco(words):
+    res = sum([sylcoOneWord(re.sub(r'[^\w\s]', '', w).lower()) for w in words.split()])
+    print(res)
+    return res
 
 
 
@@ -55,11 +43,13 @@ class HaikuDetector:
         words = text.split()[::-1]
         poem = []
         if sylco(text) == 17:
+            print("Might be a haiku")
             lines = [5, 7, 5]
             for syl in lines:
                 res = popNumSyl(syl, words)
                 words = res[2].copy()
                 poem.append(res)
+            print([i[1] for i in poem])
             if all([i[0] for i in poem]):
                 res = "You're a poet!\n\n"
                 for line in [i[1] for i in poem]:
