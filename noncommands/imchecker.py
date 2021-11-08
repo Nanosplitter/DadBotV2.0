@@ -3,7 +3,6 @@ import re
 import yaml
 import sys
 import os
-import mysql.connector
 import random
 
 if not os.path.isfile("config.yaml"):
