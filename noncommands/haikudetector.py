@@ -3,6 +3,9 @@ import yaml
 import sys
 import os
 import cmudict
+
+cd = cmudict.dict()
+
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
 else:
@@ -11,7 +14,7 @@ else:
 
 
 def lookup_word(word):
-    return cmudict.dict().get(word)
+    return cd.get(word)
 
 def sylcoOneWord(word):
     count = 0
