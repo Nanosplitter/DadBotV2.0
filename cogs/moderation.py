@@ -91,7 +91,7 @@ class moderation(commands.Cog, name="moderation"):
         if num > 333:
             num = 333
         res = [":yum:"] * num
-        await context.reply(" ".join(res))
+        await context.reply("\n".join(res))
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
