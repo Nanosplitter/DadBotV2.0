@@ -85,7 +85,7 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="clean")
     async def clean(self, context, num="1"):
         """
-        Solves many problems.
+        Solves many problems. (Limited by Discord to max out at 333)
         """
         num = int(num)
         if num > 333:
