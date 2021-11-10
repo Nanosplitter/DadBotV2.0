@@ -83,11 +83,15 @@ class moderation(commands.Cog, name="moderation"):
             await context.message.channel.send(embed=embed)
     
     @commands.command(name="clean")
-    async def clean(self, context):
+    async def clean(self, context, num="1"):
         """
         Solves many problems.
         """
-        await context.reply(":yum:")
+        num = int(num)
+        if num > 333:
+            num = 333
+        res = [":yum:"] * num
+        await context.reply(" ".join(res))
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
