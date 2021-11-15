@@ -47,10 +47,10 @@ class ImChecker:
 
                 if not hascolumn:
                     print("Adding caught column")
-                    mycursor.execute("INSERT INTO caught (user, caught) VALUES ('"+ str(message.author) +"', 1)")
+                    mycursor.execute("INSERT INTO caught (user, count) VALUES ('"+ str(message.author) +"', 1)")
                 else:
                     print("Updating caught column")
-                    mycursor.execute("UPDATE caught SET caught = caught + 1 WHERE user = '" + str(message.author) + "'")
+                    mycursor.execute("UPDATE caught SET count = count + 1 WHERE user = '" + str(message.author) + "'")
 
                 self.mydb.commit()
                 break
