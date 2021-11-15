@@ -116,9 +116,9 @@ async def on_command_error(context, error):
         await context.send(embed=embed)
     raise error
 
-# @tasks.loop(seconds=1)
-# async def checkReminders():
-#     await reminderChecker.checkReminders(bot)
+@tasks.loop(seconds=1)
+async def checkReminders():
+    await reminderChecker.checkReminders(bot)
 
 # @tasks.loop(hours=12)
 # async def drawerPcKeepAlive():
@@ -129,6 +129,6 @@ async def on_command_error(context, error):
 #     except:
 #         pass
 
-# checkReminders.start()
+checkReminders.start()
 # Run the bot with the token
 bot.run(config["token"])

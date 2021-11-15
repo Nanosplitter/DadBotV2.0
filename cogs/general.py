@@ -171,7 +171,7 @@ class general(commands.Cog, name="general"):
         """
         mycursor = self.mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT * FROM freemarketcaught ORDER BY caught DESC")
+        mycursor.execute("SELECT * FROM caught ORDER BY caught DESC")
 
         res = "```\n"
         res += "{:38s} {:s}\n".format("Username", "Caught Count")
