@@ -25,12 +25,12 @@ else:
 class general(commands.Cog, name="general"):
     def __init__(self, bot):
         self.bot = bot
-        # self.mydb = mysql.connector.connect(
-        #     host=config["dbhost"],
-        #     user=config["dbuser"],
-        #     password=config["dbpassword"],
-        #     database=config["databasename"]
-        # )
+        self.mydb = mysql.connector.connect(
+            host=config["dbhost"],
+            user=config["dbuser"],
+            password=config["dbpassword"],
+            database=config["databasename"]
+        )
 
     @commands.command(name="info", aliases=["botinfo"])
     async def info(self, context):
