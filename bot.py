@@ -5,7 +5,7 @@ import sys
 import re
 from noncommands import haikudetector
 from noncommands import imchecker
-# from noncommands import reminderLoop
+from noncommands import reminderLoop
 from noncommands import antimayhem
 
 import discord
@@ -24,7 +24,7 @@ intents = discord.Intents.default()
 bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
 
 imChecker = imchecker.ImChecker()
-# reminderChecker = reminderLoop.ReminderLoop()
+reminderChecker = reminderLoop.ReminderLoop()
 antiMayhem = antimayhem.AntiMayhem()
 haikuDetector = haikudetector.HaikuDetector()
 
