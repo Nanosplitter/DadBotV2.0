@@ -38,7 +38,7 @@ class ImChecker:
             
                 mycursor = self.mydb.cursor(buffered=True)
 
-                mycursor.execute("SELECT * FROM freemarketcaught WHERE user = '" + str(message.author) + "'")
+                mycursor.execute("SELECT * FROM caught WHERE user = '" + str(message.author) + "'")
                 hascolumn = False
                 for m in mycursor:
                     print("Found caught column")
@@ -47,10 +47,10 @@ class ImChecker:
 
                 if not hascolumn:
                     print("Adding caught column")
-                    mycursor.execute("INSERT INTO freemarketcaught (user, caught) VALUES ('"+ str(message.author) +"', 1)")
+                    mycursor.execute("INSERT INTO caught (user, caught) VALUES ('"+ str(message.author) +"', 1)")
                 else:
                     print("Updating caught column")
-                    mycursor.execute("UPDATE freemarketcaught SET caught = caught + 1 WHERE user = '" + str(message.author) + "'")
+                    mycursor.execute("UPDATE caught SET caught = caught + 1 WHERE user = '" + str(message.author) + "'")
 
                 self.mydb.commit()
                 break
