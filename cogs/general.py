@@ -181,7 +181,7 @@ class general(commands.Cog, name="general"):
         for m in mycursor:
             res += "{:38s} {:d}\n".format(m[1], int(m[2]))
         res += "```"
-
+        mycursor.close()
         await context.send(res)
 
     @commands.command(name="poll")

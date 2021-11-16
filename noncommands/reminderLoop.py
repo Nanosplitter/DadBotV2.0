@@ -39,3 +39,4 @@ class ReminderLoop:
         mycursor.execute("DELETE FROM reminders WHERE remind_time < NOW()")
 
         self.mydb.commit()
+        mycursor.close()

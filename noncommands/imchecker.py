@@ -54,6 +54,7 @@ class ImChecker:
                     mycursor.execute("UPDATE caught SET count = count + 1 WHERE user = '" + str(message.author) + "'")
 
                 self.mydb.commit()
+                mycursor.close()
                 break
 
 class Confusables:
