@@ -133,6 +133,7 @@ class general(commands.Cog, name="general"):
         """
         Has DadBot remind you at a specific time. 
         """
+        self.mydb.reconnect()
         timeStr = " ".join(args).lower()
         time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
         timeWords = timeStr
@@ -169,6 +170,7 @@ class general(commands.Cog, name="general"):
         """
         See how many times everyone on the server has been caught by DadBot.
         """
+        self.mydb.reconnect()
         mycursor = self.mydb.cursor(buffered=True)
 
         mycursor.execute("SELECT * FROM caught ORDER BY count DESC")

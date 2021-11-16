@@ -35,7 +35,8 @@ class ImChecker:
             if res and rand == 3:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
-            
+                
+                self.mydb.reconnect()
                 mycursor = self.mydb.cursor(buffered=True)
 
                 mycursor.execute("SELECT * FROM caught WHERE user = '" + str(message.author) + "'")

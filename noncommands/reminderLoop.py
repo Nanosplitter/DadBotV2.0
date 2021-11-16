@@ -19,6 +19,7 @@ class ReminderLoop:
         )
 
     async def checkReminders(self, bot):
+        self.mydb.reconnect()
         mycursor = self.mydb.cursor(buffered=True)
 
         mycursor.execute("SELECT * FROM reminders WHERE remind_time <= NOW()")
