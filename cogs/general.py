@@ -153,6 +153,7 @@ class general(commands.Cog, name="general"):
 
             await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
             self.mydb.commit()
+            mycursor.close()
         else:
             await context.reply("I can't understand that time, try again but differently")
         
