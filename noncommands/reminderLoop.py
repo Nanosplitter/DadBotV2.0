@@ -18,7 +18,7 @@ class ReminderLoop:
             password=config["dbpassword"],
             database=config["databasename"]
         )
-        mycursor = mydb.cursor(buffered=True)
+        mycursor = mydb.cursor()
 
         mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= NOW()")
 
