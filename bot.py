@@ -116,7 +116,7 @@ async def on_command_error(context, error):
         await context.send(embed=embed)
     raise error
 
-@tasks.loop(seconds=5)
+@tasks.loop(seconds=1)
 async def checkReminders():
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
