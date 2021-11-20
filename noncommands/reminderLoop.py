@@ -22,7 +22,7 @@ class ReminderLoop:
 
         mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= NOW()")
 
-        for m in mycursor:
+        for m in mycursor.fetchall():
             print(m)
             for channel in bot.get_all_channels():
                 try:
@@ -35,7 +35,7 @@ class ReminderLoop:
                 except:
                     pass
         
-        mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW()")
+        # mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW()")
 
         mydb.commit()
         mycursor.close()
