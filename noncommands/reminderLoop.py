@@ -35,6 +35,20 @@ class ReminderLoop:
                     break
                 except:
                     pass
+
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+
+    async def deleteOldReminders(self, bot):
+        mydb = mysql.connector.connect(
+            host=config["dbhost"],
+            user=config["dbuser"],
+            password=config["dbpassword"],
+            database=config["databasename"],
+            autocommit=True
+        )
+        mycursor = mydb.cursor(buffered=True)
         
         mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= UTC_TIMESTAMP();")
 

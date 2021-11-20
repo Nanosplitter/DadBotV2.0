@@ -116,9 +116,10 @@ async def on_command_error(context, error):
         await context.send(embed=embed)
     raise error
 
-@tasks.loop(seconds=1)
+@tasks.loop(seconds=5)
 async def checkReminders():
     await reminderChecker.checkReminders(bot)
+    await reminderChecker.deleteOldReminders(bot)
 
 # @tasks.loop(hours=12)
 # async def drawerPcKeepAlive():
