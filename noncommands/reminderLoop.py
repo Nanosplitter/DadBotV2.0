@@ -19,6 +19,7 @@ class ReminderLoop:
         )
 
     async def checkReminders(self, bot):
+        print("checking reminders")
         self.mydb.reconnect()
         mycursor = self.mydb.cursor(buffered=True)
 
@@ -36,7 +37,7 @@ class ReminderLoop:
                 except:
                     pass
         
-        mycursor.execute("DELETE FROM reminders WHERE remind_time < NOW()")
+        mycursor.execute("DELETE FROM reminders WHERE remind_time <= NOW()")
 
         self.mydb.commit()
         mycursor.close()
