@@ -18,10 +18,9 @@ class ReminderLoop:
             password=config["dbpassword"],
             database=config["databasename"]
         )
-        mydb.reconnect()
         mycursor = mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT * FROM reminders WHERE remind_time <= NOW()")
+        mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= NOW()")
 
         for m in mycursor:
             for channel in bot.get_all_channels():
@@ -35,7 +34,7 @@ class ReminderLoop:
                 except:
                     pass
         
-        mycursor.execute("DELETE FROM reminders WHERE remind_time <= NOW()")
+        mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW()")
 
         mydb.commit()
         mycursor.close()
