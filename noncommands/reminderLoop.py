@@ -19,7 +19,6 @@ class ReminderLoop:
         )
 
     async def checkReminders(self, bot):
-        print("checking reminders")
         self.mydb.reconnect()
         mycursor = self.mydb.cursor(buffered=True)
 
