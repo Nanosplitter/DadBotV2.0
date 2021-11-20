@@ -35,7 +35,7 @@ class ReminderLoop:
                 except:
                     pass
         
-        # mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW();")
+        mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= UTC_TIMESTAMP();")
 
         mydb.commit()
         mycursor.close()
