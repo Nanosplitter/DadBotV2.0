@@ -23,6 +23,7 @@ class ReminderLoop:
         mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= NOW()")
 
         for m in mycursor:
+            print(m)
             for channel in bot.get_all_channels():
                 try:
                     msg = await channel.fetch_message(m[2])
