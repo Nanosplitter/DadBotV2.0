@@ -131,7 +131,8 @@ class general(commands.Cog, name="general"):
             host=config["dbhost"],
             user=config["dbuser"],
             password=config["dbpassword"],
-            database=config["databasename"]
+            database=config["databasename"],
+            autocommit=True
         )
         timeStr = " ".join(args).lower()
         time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
@@ -148,7 +149,7 @@ class general(commands.Cog, name="general"):
             timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
             print(timeUTC.strftime(f))
             mycursor = mydb.cursor(buffered=True)
-            mycursor.execute("INSERT INTO reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
+            mycursor.execute("INSERT INTO dad.reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
 
             await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
             mydb.commit()
