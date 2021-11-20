@@ -20,7 +20,7 @@ class ReminderLoop:
         )
         mycursor = mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= NOW()")
+        mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= UTC_TIMESTAMP();")
 
         for m in mycursor:
             print(m)
@@ -35,7 +35,7 @@ class ReminderLoop:
                 except:
                     pass
         
-        # mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW()")
+        # mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= NOW();")
 
         mydb.commit()
         mycursor.close()
