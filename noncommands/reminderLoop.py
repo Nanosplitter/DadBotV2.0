@@ -10,17 +10,16 @@ else:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
 class ReminderLoop:
-    def __init__(self):
-        self.mydb = mysql.connector.connect(
+
+    async def checkReminders(self, bot):
+        mydb = mysql.connector.connect(
             host=config["dbhost"],
             user=config["dbuser"],
             password=config["dbpassword"],
             database=config["databasename"]
         )
-
-    async def checkReminders(self, bot):
-        self.mydb.reconnect()
-        mycursor = self.mydb.cursor(buffered=True)
+        mydb.reconnect()
+        mycursor = mydb.cursor(buffered=True)
 
         mycursor.execute("SELECT * FROM reminders WHERE remind_time <= NOW()")
 
@@ -38,5 +37,5 @@ class ReminderLoop:
         
         mycursor.execute("DELETE FROM reminders WHERE remind_time <= NOW()")
 
-        self.mydb.commit()
+        mydb.commit()
         mycursor.close()

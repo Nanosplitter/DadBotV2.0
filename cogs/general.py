@@ -25,12 +25,6 @@ else:
 class general(commands.Cog, name="general"):
     def __init__(self, bot):
         self.bot = bot
-        self.mydb = mysql.connector.connect(
-            host=config["dbhost"],
-            user=config["dbuser"],
-            password=config["dbpassword"],
-            database=config["databasename"]
-        )
 
     @commands.command(name="info", aliases=["botinfo"])
     async def info(self, context):
@@ -133,7 +127,12 @@ class general(commands.Cog, name="general"):
         """
         Has DadBot remind you at a specific time. 
         """
-        self.mydb.reconnect()
+        mydb = mysql.connector.connect(
+            host=config["dbhost"],
+            user=config["dbuser"],
+            password=config["dbpassword"],
+            database=config["databasename"]
+        )
         timeStr = " ".join(args).lower()
         time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
         timeWords = timeStr
@@ -148,11 +147,11 @@ class general(commands.Cog, name="general"):
         if time is not None:
             timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
             print(timeUTC.strftime(f))
-            mycursor = self.mydb.cursor(buffered=True)
+            mycursor = mydb.cursor(buffered=True)
             mycursor.execute("INSERT INTO reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
 
             await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
-            self.mydb.commit()
+            mydb.commit()
             mycursor.close()
         else:
             await context.reply("I can't understand that time, try again but differently")
@@ -171,8 +170,13 @@ class general(commands.Cog, name="general"):
         """
         See how many times everyone on the server has been caught by DadBot.
         """
-        self.mydb.reconnect()
-        mycursor = self.mydb.cursor(buffered=True)
+        mydb = mysql.connector.connect(
+            host=config["dbhost"],
+            user=config["dbuser"],
+            password=config["dbpassword"],
+            database=config["databasename"]
+        )
+        mycursor = mydb.cursor(buffered=True)
 
         mycursor.execute("SELECT * FROM caught ORDER BY count DESC")
 

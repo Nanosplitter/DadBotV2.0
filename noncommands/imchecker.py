@@ -15,12 +15,6 @@ else:
 class ImChecker:
     def __init__(self):
         self.imList = [" im ", " i'm ", " Im ", " I'm ", " IM ", " I'M ", " i am ", " I am ", " I AM ", " lm ", " l'm ", " lM ", " l'M ", " l am ", " l AM "]
-        self.mydb = mysql.connector.connect(
-            host=config["dbhost"],
-            user=config["dbuser"],
-            password=config["dbpassword"],
-            database=config["databasename"]
-        )
         self.confusables = Confusables('./resources/likeness.txt')
 
     async def checkIm(self, message):
@@ -35,9 +29,13 @@ class ImChecker:
             if res and rand == 3:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
-                
-                self.mydb.reconnect()
-                mycursor = self.mydb.cursor(buffered=True)
+                mydb = mysql.connector.connect(
+                    host=config["dbhost"],
+                    user=config["dbuser"],
+                    password=config["dbpassword"],
+                    database=config["databasename"]
+                )
+                mycursor = mydb.cursor(buffered=True)
 
                 mycursor.execute("SELECT * FROM caught WHERE user = '" + str(message.author) + "'")
                 hascolumn = False
@@ -53,7 +51,7 @@ class ImChecker:
                     print("Updating caught column")
                     mycursor.execute("UPDATE caught SET count = count + 1 WHERE user = '" + str(message.author) + "'")
 
-                self.mydb.commit()
+                mydb.commit()
                 mycursor.close()
                 break
 
