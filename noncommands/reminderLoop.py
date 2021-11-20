@@ -16,7 +16,8 @@ class ReminderLoop:
             host=config["dbhost"],
             user=config["dbuser"],
             password=config["dbpassword"],
-            database=config["databasename"]
+            database=config["databasename"],
+            autocommit=True
         )
         mycursor = mydb.cursor(buffered=True)
 
