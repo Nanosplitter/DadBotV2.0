@@ -53,6 +53,7 @@ class ImChecker:
 
                 mydb.commit()
                 mycursor.close()
+                mydb.close()
                 break
 
 class Confusables:

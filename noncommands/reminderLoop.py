@@ -39,3 +39,4 @@ class ReminderLoop:
 
         mydb.commit()
         mycursor.close()
+        mydb.close()

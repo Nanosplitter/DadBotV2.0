@@ -153,6 +153,7 @@ class general(commands.Cog, name="general"):
             await context.reply("You will be reminded at: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
             mydb.commit()
             mycursor.close()
+            mydb.close()
         else:
             await context.reply("I can't understand that time, try again but differently")
         
@@ -187,6 +188,7 @@ class general(commands.Cog, name="general"):
             res += "{:38s} {:d}\n".format(m[1], int(m[2]))
         res += "```"
         mycursor.close()
+        mydb.close()
         await context.send(res)
 
     @commands.command(name="poll")
