@@ -62,7 +62,7 @@ def getSummarySpread(filePath, numSent):
     #display(topic_encoded_df.sort_values("topic1"))
     # for c in col:
     #     print(topic_encoded_df.sort_values(c).iloc[-1]["doc"])
-    dictionary = vectorizer.get_feature_names()
+    dictionary = vectorizer.get_feature_names_out()
     encoding_matrix=pd.DataFrame(svd.components_,index=col,columns=dictionary).T
 
     for i in range(numSent):
@@ -118,7 +118,7 @@ def getSummaryMono(text, numSent):
     topic_encoded_df["docFilt"] = docFilt
     topic_encoded_df["doc"] = doc
 
-    dictionary = vectorizer.get_feature_names()
+    dictionary = vectorizer.get_feature_names_out()
     encoding_matrix=pd.DataFrame(svd.components_,index=col,columns=dictionary).T
 
     for i in range(len(col)):
@@ -156,7 +156,7 @@ def getSummary(config, url, numSent=5):
     )
     embed.add_field(
         name="Summary:",
-        value=getSummaryMono(article["text"], numSent),
+        value="\n".join(getSummaryMono(article["text"], numSent)),
         inline = True
     )
 
