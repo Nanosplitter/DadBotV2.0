@@ -7,6 +7,7 @@ import numpy as np
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
 from trafilatura import bare_extraction
+import trafilatura
 import discord
 
 nltk.download('punkt')
