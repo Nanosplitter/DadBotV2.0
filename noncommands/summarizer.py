@@ -156,7 +156,7 @@ def getSummary(config, url):
     embed.add_field(
         name="Summary:",
         value="\n".join(getSummaryMono(article["text"], numSent)),
-        inline = True
+        inline = False
     )
 
     return embed
