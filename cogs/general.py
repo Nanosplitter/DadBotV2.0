@@ -14,6 +14,7 @@ import discord
 import yaml
 from discord.ext import commands
 from discord.ext import tasks
+from noncommands import summarizer
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -157,7 +158,15 @@ class general(commands.Cog, name="general"):
             mydb.close()
         else:
             await context.reply("I can't understand that time, try again but differently")
-        
+
+    
+    @commands.command(name="tldr")
+    async def tldr(self, context, url, numSent):
+        """
+        Get the invite link of the bot to be able to invite it to another server.
+        """
+        await context.send(embed=summarizer.getSummary(config, url, numSent))
+
 
     @commands.command(name="invite")
     async def invite(self, context):

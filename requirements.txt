@@ -9,3 +9,6 @@ pytz
 requests
 aiofiles
 inspiro
+trafilatura
+sklearn
+nltk
