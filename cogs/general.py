@@ -161,11 +161,11 @@ class general(commands.Cog, name="general"):
 
     
     @commands.command(name="tldr")
-    async def tldr(self, context, url, numSent):
+    async def tldr(self, context, url):
         """
         Get the invite link of the bot to be able to invite it to another server.
         """
-        await context.send(embed=summarizer.getSummary(config, url, numSent))
+        await context.send(embed=summarizer.getSummary(config, url))
 
 
     @commands.command(name="invite")
