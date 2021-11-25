@@ -165,7 +165,10 @@ class general(commands.Cog, name="general"):
         """
         Get the invite link of the bot to be able to invite it to another server.
         """
-        await context.send(embed=summarizer.getSummary(config, url))
+        try:
+            await context.send(embed=summarizer.getSummary(config, url))
+        except:
+             await context.send("There's something odd about that link. Either they won't let me read it or you sent it wrongly.")
 
 
     @commands.command(name="invite")
