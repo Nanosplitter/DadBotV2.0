@@ -97,7 +97,10 @@ class moderation(commands.Cog, name="moderation"):
             num = int(num)
             if num > 333:
                 num = 333
-            res = [":yum:"] * num
+            if (context.guild.id == 856919397754470420):
+                res = [":bdk:"] * num
+            else:
+                res = [":yum:"] * num
             await context.reply("\n".join(res))      
 
     @commands.command(name="ban")
