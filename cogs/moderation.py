@@ -98,7 +98,7 @@ class moderation(commands.Cog, name="moderation"):
             if num > 333:
                 num = 333
             if (context.guild.id == 856919397754470420):
-                res = [":bdk:"] * num
+                res = ["<a:bdk:920426208498421840>"] * num
             else:
                 res = [":yum:"] * num
             await context.reply("\n".join(res))      
