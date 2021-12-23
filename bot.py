@@ -121,7 +121,7 @@ async def on_command_error(context, error):
 
 @tasks.loop(seconds=5)
 async def checkReminders():
-    schedule.run_pending()
+    await schedule.run_pending()
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
 
