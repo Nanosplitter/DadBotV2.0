@@ -3,7 +3,7 @@ import platform
 import random
 import sys
 import re
-import schedule
+# import schedule
 from noncommands import haikudetector
 from noncommands import imchecker
 from noncommands import reminderLoop
@@ -121,11 +121,11 @@ async def on_command_error(context, error):
 
 @tasks.loop(seconds=5)
 async def checkReminders():
-    await schedule.run_pending()
+    # await schedule.run_pending()
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
 
 checkReminders.start()
-schedule.every().day.at("19:00").do(scooby.whatsTheMove(bot))
-schedule.every().thursday.do(scooby.praiseFireGator(bot))
+# schedule.every().day.at("19:00").do(scooby.whatsTheMove(bot))
+# schedule.every().thursday.do(scooby.praiseFireGator(bot))
 bot.run(config["token"])
