@@ -3,10 +3,12 @@ import platform
 import random
 import sys
 import re
+import schedule
 from noncommands import haikudetector
 from noncommands import imchecker
 from noncommands import reminderLoop
 from noncommands import antimayhem
+from noncommands import scooby
 
 import discord
 import yaml
@@ -27,6 +29,7 @@ imChecker = imchecker.ImChecker()
 reminderChecker = reminderLoop.ReminderLoop()
 antiMayhem = antimayhem.AntiMayhem()
 haikuDetector = haikudetector.HaikuDetector()
+scooby = scooby.Scooby()
 
 # The code in this even is executed when the bot is ready
 @bot.event
@@ -118,18 +121,11 @@ async def on_command_error(context, error):
 
 @tasks.loop(seconds=5)
 async def checkReminders():
+    schedule.run_pending()
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
 
-# @tasks.loop(hours=12)
-# async def drawerPcKeepAlive():
-#     try:
-#         client = discord.Client()
-#         channel = client.get_channel(662868528629547009)
-#         await channel.send('DRAWER PC DRAWER PC')
-#     except:
-#         pass
-
 checkReminders.start()
-# Run the bot with the token
+schedule.every().day.at("19:00").do(scooby.whatsTheMove(bot))
+schedule.every().thursday.do(scooby.praiseFireGator(bot))
 bot.run(config["token"])

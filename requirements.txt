@@ -12,3 +12,4 @@ inspiro
 trafilatura
 sklearn
 nltk
+schedule
