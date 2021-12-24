@@ -3,6 +3,8 @@ import platform
 import random
 import sys
 import re
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 # import schedule
 from noncommands import haikudetector
 from noncommands import imchecker
@@ -29,7 +31,7 @@ imChecker = imchecker.ImChecker()
 reminderChecker = reminderLoop.ReminderLoop()
 antiMayhem = antimayhem.AntiMayhem()
 haikuDetector = haikudetector.HaikuDetector()
-scooby = scooby.Scooby()
+scooby = scooby.Scooby(bot)
 
 # The code in this even is executed when the bot is ready
 @bot.event
@@ -121,11 +123,12 @@ async def on_command_error(context, error):
 
 @tasks.loop(seconds=5)
 async def checkReminders():
-    # await schedule.run_pending()
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
 
 checkReminders.start()
-# schedule.every().day.at("19:00").do(scooby.whatsTheMove(bot))
-# schedule.every().thursday.do(scooby.praiseFireGator(bot))
+scheduler = AsyncIOScheduler()
+scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "19", minute = "0", second = "0", timezone="EST"))
+scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="thu", hour = "0", minute = "0", second = "0", timezone="EST"))
+scheduler.start()
 bot.run(config["token"])

@@ -13,3 +13,4 @@ trafilatura
 sklearn
 nltk
 schedule
+apscheduler
