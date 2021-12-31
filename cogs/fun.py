@@ -204,13 +204,9 @@ class Fun(commands.Cog, name="fun"):
         """
         UwU
         """
-        try:
-            message = await context.channel.fetch_message(context.message.reference.message_id)
-            flags = uwuify.SMILEY | uwuify.YU
-            await context.reply(uwuify.uwu(message, flags=flags))
-        except:
-            flags = uwuify.SMILEY | uwuify.YU
-            await context.reply(uwuify.uwu("hello", flags=flags))
+        message = await context.channel.fetch_message(context.message.reference.message_id)
+        flags = uwuify.SMILEY | uwuify.YU
+        await context.reply(uwuify.uwu(message, flags=flags))
     
     @commands.command(name="drawerpc")
     async def newperson(self, context):
