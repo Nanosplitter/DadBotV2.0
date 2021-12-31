@@ -13,6 +13,7 @@ from discord.ext.commands import BucketType
 import requests
 import uuid
 import inspirobot
+import uwuify
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -197,6 +198,19 @@ class Fun(commands.Cog, name="fun"):
         file = discord.File(fileName, filename="newperson.png")
         await context.send("", file=file)
         os.remove(fileName)
+    
+    @commands.command(name="uwu")
+    async def uwu(self, context):
+        """
+        UwU
+        """
+        try:
+            message = await context.channel.fetch_message(context.message.reference.message_id)
+            flags = uwuify.SMILEY | uwuify.YU
+            await context.reply(uwuify.uwu(message, flags=flags))
+        except:
+            flags = uwuify.SMILEY | uwuify.YU
+            await context.reply(uwuify.uwu("hello", flags=flags))
     
     @commands.command(name="drawerpc")
     async def newperson(self, context):

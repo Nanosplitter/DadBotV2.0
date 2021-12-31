@@ -14,3 +14,4 @@ sklearn
 nltk
 schedule
 apscheduler
+uwuify
