@@ -206,7 +206,7 @@ class Fun(commands.Cog, name="fun"):
         """
         message = await context.channel.fetch_message(context.message.reference.message_id)
         flags = uwuify.SMILEY | uwuify.YU
-        await context.reply(uwuify.uwu(message, flags=flags))
+        await context.reply(uwuify.uwu(message.content, flags=flags))
     
     @commands.command(name="drawerpc")
     async def newperson(self, context):
