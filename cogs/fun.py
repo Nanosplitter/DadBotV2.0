@@ -14,6 +14,9 @@ import requests
 import uuid
 import inspirobot
 import uwuify
+import language_tool_python
+from fastpunct import FastPunct
+import contractions
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -24,6 +27,8 @@ else:
 
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
+        self.languageTool = language_tool_python.LanguageTool('en-US')
+        self.fastpunct = FastPunct()
         self.bot = bot
 
     @commands.command(name="randomfact")
@@ -207,6 +212,29 @@ class Fun(commands.Cog, name="fun"):
         message = await context.channel.fetch_message(context.message.reference.message_id)
         flags = uwuify.SMILEY | uwuify.YU
         await context.reply(uwuify.uwu(message.content, flags=flags))
+    
+    @commands.command(name="antiuwu")
+    async def antiuwu(self, context):
+        """
+        UwU but scholarly
+        """
+        message = await context.channel.fetch_message(context.message.reference.message_id)
+        text = message.content
+        print(self.languageTool.correct(text))
+        if len(text) >= 400:
+            corrected = self.fastpunct.punct(contractions.fix(self.languageTool.correct(text)))
+        else:
+            corrected = contractions.fix(self.languageTool.correct(text))
+        await context.reply(corrected)
+
+    @commands.command(name="blockeningSupport")
+    async def blockeningSupport(self, context):
+        """
+        For support
+        """
+        channel = context.author.voice.channel
+        await context.reply("On my way!")
+        await channel.connect()
     
     @commands.command(name="drawerpc")
     async def newperson(self, context):
