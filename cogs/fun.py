@@ -15,7 +15,6 @@ import uuid
 import inspirobot
 import uwuify
 import language_tool_python
-from fastpunct import FastPunct
 import contractions
 
 if not os.path.isfile("config.yaml"):
@@ -220,11 +219,7 @@ class Fun(commands.Cog, name="fun"):
         """
         message = await context.channel.fetch_message(context.message.reference.message_id)
         text = message.content
-        print(self.languageTool.correct(text))
-        if len(text) >= 400:
-            corrected = self.fastpunct.punct(contractions.fix(self.languageTool.correct(text)))
-        else:
-            corrected = contractions.fix(self.languageTool.correct(text))
+        corrected = contractions.fix(self.languageTool.correct(text))
         await context.reply(corrected)
 
     @commands.command(name="blockeningSupport")

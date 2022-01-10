@@ -22,4 +22,3 @@ tensorflow
 cmudict
 contractions
 language-tool-python
-fastpunct
