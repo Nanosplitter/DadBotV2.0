@@ -27,6 +27,7 @@ else:
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.languageTool = language_tool_python.LanguageTool('en-US')
+        self.fastpunct = FastPunct()
         self.bot = bot
 
     @commands.command(name="randomfact")
