@@ -18,8 +18,7 @@ schedule
 apscheduler
 uwuify
 autocorrect
+tensorflow
 cmudict
 contractions
 language-tool-python
-torch
-transformers

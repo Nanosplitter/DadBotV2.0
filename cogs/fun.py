@@ -16,8 +16,6 @@ import inspirobot
 import uwuify
 import language_tool_python
 import contractions
-import torch
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -29,19 +27,7 @@ else:
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.languageTool = language_tool_python.LanguageTool('en-US')
-        self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-        self.model = GPT2LMHeadModel.from_pretrained('gpt2')
         self.bot = bot
-
-    @commands.command(name="gpt")
-    async def gpt(self, context, *args):
-        """
-        Dad is creative.
-        """
-        inputs = self.tokenizer.encode(" ".join(args), return_tensors='pt')
-        outputs = self.model.generate(inputs, max_length=200, do_sample=True)
-        text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        await context.reply(text)
 
     @commands.command(name="randomfact")
     async def randomfact(self, context):
