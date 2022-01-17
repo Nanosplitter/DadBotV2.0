@@ -4,12 +4,8 @@ import sys
 import yaml
 from discord.ext import commands
 
-# Only if you want to use variables that are in the config.yaml file.
-if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - TEMPLATE - " + str(os.path))
-else:
-    with open("config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 
 # Here we name the cog and create a new class for the cog.

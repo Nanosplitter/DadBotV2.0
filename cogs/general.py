@@ -16,11 +16,8 @@ from discord.ext import commands
 from discord.ext import tasks
 from noncommands import summarizer
 
-if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - GENERAL - " + str(os.path))
-else:
-    with open("config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 
 class general(commands.Cog, name="general"):

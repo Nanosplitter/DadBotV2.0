@@ -17,11 +17,8 @@ import yaml
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
-if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - BOT - " + str(os.path))
-else:
-    with open("config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 intents = discord.Intents.default()
 

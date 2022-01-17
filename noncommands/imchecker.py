@@ -6,11 +6,8 @@ import os
 import mysql.connector
 import random
 
-if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - IMCHECKER - " + str(os.path))
-else:
-    with open("config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 class ImChecker:
     def __init__(self):

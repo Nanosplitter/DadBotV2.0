@@ -3,11 +3,8 @@ import sys
 import os
 import uwuify
 
-if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - ANTIALEX - " + str(os.path))
-else:
-    with open("config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 class AntiMayhem:
     async def gotem(self, context):
