@@ -5,8 +5,9 @@ import os
 import cmudict
 
 cd = cmudict.dict()
-with open("../config.yaml") as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
+
+arr = os.listdir()
+print(arr)
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again. - HAIKUDETECTOR - " + str(os.path))
 else:
