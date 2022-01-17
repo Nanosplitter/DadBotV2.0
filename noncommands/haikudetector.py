@@ -8,11 +8,13 @@ cd = cmudict.dict()
 
 # arr = os.listdir("./DadBot/")
 # print(arr)
-if not os.path.isfile("./DadBot/config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again. - HAIKUDETECTOR - " + str(os.path))
-else:
-    with open("./DadBot/config.yaml") as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+with open("./DadBot/config.yaml") as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
+# if not os.path.isfile("./DadBot/config.yaml"):
+#     sys.exit("'config.yaml' not found! Please add it and try again. - HAIKUDETECTOR - " + str(os.path))
+# else:
+#     with open("./DadBot/config.yaml") as file:
+#         config = yaml.load(file, Loader=yaml.FullLoader)
 
 
 def lookup_word(word):
