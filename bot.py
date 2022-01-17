@@ -17,7 +17,9 @@ import yaml
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
-os.chdir("./DadBot")
+print("bot:", os.getcwd())
+if str(os.getcwd()) != "/DadBot":
+    os.chdir("./DadBot")
 
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)

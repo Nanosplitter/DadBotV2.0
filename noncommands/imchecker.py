@@ -5,6 +5,7 @@ import sys
 import os
 import mysql.connector
 import random
+print("imchecker:", os.getcwd())
 if str(os.getcwd()) != "/DadBot":
     os.chdir("./DadBot")
 
