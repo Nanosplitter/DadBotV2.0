@@ -6,7 +6,7 @@ import yaml
 from discord.ext import commands
 
 if not os.path.isfile("config.yaml"):
-    sys.exit("'config.yaml' not found! Please add it and try again.")
+    sys.exit("'config.yaml' not found! Please add it and try again. - OWNER - " + str(os.path))
 else:
     with open("config.yaml") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
