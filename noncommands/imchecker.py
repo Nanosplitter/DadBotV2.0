@@ -12,7 +12,7 @@ with open("./DadBot/config.yaml") as file:
 class ImChecker:
     def __init__(self):
         self.imList = [" im ", " i'm ", " Im ", " I'm ", " IM ", " I'M ", " i am ", " I am ", " I AM ", " lm ", " l'm ", " lM ", " l'M ", " l am ", " l AM "]
-        self.confusables = Confusables('./resources/likeness.txt')
+        self.confusables = Confusables('./DadBot/resources/likeness.txt')
 
     async def checkIm(self, message):
         for string in self.imList:
