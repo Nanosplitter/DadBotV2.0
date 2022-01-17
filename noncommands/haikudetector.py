@@ -24,7 +24,6 @@ def sylcoOneWord(word):
 
 def sylco(words):
     res = sum([sylcoOneWord(re.sub(r'[^\w\s]', '', w).lower()) for w in words.split()])
-    print(words, ":", res)
     return res
 
 
@@ -44,13 +43,11 @@ class HaikuDetector:
         words = text.split()[::-1]
         poem = []
         if sylco(text) == 17:
-            print("Might be a haiku")
             lines = [5, 7, 5]
             for syl in lines:
                 res = popNumSyl(syl, words)
                 words = res[2].copy()
                 poem.append(res)
-            print([i[1] for i in poem])
             if all([i[0] for i in poem]):
                 res = "You're a poet!\n\n"
                 for line in [i[1] for i in poem]:

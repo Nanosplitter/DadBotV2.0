@@ -17,7 +17,6 @@ import yaml
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
-print("bot:", os.getcwd())
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 
@@ -95,8 +94,7 @@ async def on_command_completion(ctx):
     fullCommandName = ctx.command.qualified_name
     split = fullCommandName.split(" ")
     executedCommand = str(split[0])
-    print(
-        f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.message.guild.id}) by {ctx.message.author} (ID: {ctx.message.author.id})")
+    print(f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.message.guild.id}) by {ctx.message.author} (ID: {ctx.message.author.id})")
 
 
 # The code in this event is executed every time a valid commands catches an error

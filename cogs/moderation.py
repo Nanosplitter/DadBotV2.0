@@ -72,7 +72,6 @@ class moderation(commands.Cog, name="moderation"):
             )
             await context.send(embed=embed)
         except Exception as e:
-            print(e)
             embed = discord.Embed(
                 title="Error!",
                 description="An error occurred while trying to change the nickname of the user.",

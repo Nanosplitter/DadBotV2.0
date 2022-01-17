@@ -146,7 +146,6 @@ class general(commands.Cog, name="general"):
             
         if time is not None:
             timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
-            print(timeUTC.strftime(f))
             mycursor = mydb.cursor(buffered=True)
             mycursor.execute("INSERT INTO dad.reminders (author, message_id, remind_time) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.id) +"', '"+ timeUTC.strftime(f) +"')")
 

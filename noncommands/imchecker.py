@@ -5,7 +5,7 @@ import sys
 import os
 import mysql.connector
 import random
-print("imchecker:", os.getcwd())
+
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 
@@ -24,8 +24,7 @@ class ImChecker:
             fake_string = " " + message.content
             res = r.match(fake_string)
             rand = random.randint(0, 9)
-            if res:
-                print("Caught, rand is", rand)
+
             if res and rand == 3:
                 typeIm = res.group().strip() + " "
                 await message.reply("Hi " + str(message.content).split(typeIm, 1)[1] + ", I'm Dad")
@@ -40,15 +39,11 @@ class ImChecker:
                 mycursor.execute("SELECT * FROM caught WHERE user = '" + str(message.author) + "'")
                 hascolumn = False
                 for m in mycursor:
-                    print("Found caught column")
-                    print(m)
                     hascolumn = True
 
                 if not hascolumn:
-                    print("Adding caught column")
                     mycursor.execute("INSERT INTO caught (user, count) VALUES ('"+ str(message.author) +"', 1)")
                 else:
-                    print("Updating caught column")
                     mycursor.execute("UPDATE caught SET count = count + 1 WHERE user = '" + str(message.author) + "'")
 
                 mydb.commit()
