@@ -5,9 +5,9 @@ import sys
 import os
 import mysql.connector
 import random
-print("Before:", os.getcwd())
-os.chdir("./DadBot")
-print("After:", os.getcwd())
+if str(os.getcwd()) != "/DadBot":
+    os.chdir("./DadBot")
+
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
