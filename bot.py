@@ -18,7 +18,7 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
 print("bot:", os.getcwd())
-if str(os.getcwd()) != "/DadBot":
+if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 
 with open("config.yaml") as file:

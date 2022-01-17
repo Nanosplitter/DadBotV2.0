@@ -6,7 +6,7 @@ import cmudict
 
 cd = cmudict.dict()
 print("haikudetector:", os.getcwd())
-if str(os.getcwd()) != "/DadBot":
+if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)

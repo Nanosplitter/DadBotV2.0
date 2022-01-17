@@ -6,7 +6,7 @@ import os
 import mysql.connector
 import random
 print("imchecker:", os.getcwd())
-if str(os.getcwd()) != "/DadBot":
+if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 
 with open("config.yaml") as file:
