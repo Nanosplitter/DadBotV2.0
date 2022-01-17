@@ -6,6 +6,7 @@ import cmudict
 
 cd = cmudict.dict()
 if str(os.getcwd()) != "/DadBot":
+    print(str(os.getcwd()))
     os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
