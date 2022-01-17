@@ -4,7 +4,7 @@ import sys
 import yaml
 from discord.ext import commands
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 

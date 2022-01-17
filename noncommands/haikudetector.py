@@ -6,7 +6,7 @@ import cmudict
 
 cd = cmudict.dict()
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 

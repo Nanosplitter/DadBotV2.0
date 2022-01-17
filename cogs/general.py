@@ -16,7 +16,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from noncommands import summarizer
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 

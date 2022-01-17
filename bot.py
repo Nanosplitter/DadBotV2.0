@@ -17,7 +17,9 @@ import yaml
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
-with open("./DadBot/config.yaml") as file:
+os.chdir("./DadBot")
+
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 intents = discord.Intents.default()

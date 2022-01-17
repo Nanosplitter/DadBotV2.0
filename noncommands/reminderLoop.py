@@ -3,7 +3,7 @@ import sys
 import os
 import mysql.connector
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 class ReminderLoop:

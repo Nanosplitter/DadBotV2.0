@@ -4,7 +4,7 @@ import os
 import requests
 import random
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 class AntiMayhem:

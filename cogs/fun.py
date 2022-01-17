@@ -17,7 +17,7 @@ import uwuify
 import language_tool_python
 import contractions
 
-with open("./DadBot/config.yaml") as file:
+with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 
