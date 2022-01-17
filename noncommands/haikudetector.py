@@ -6,7 +6,7 @@ import cmudict
 
 cd = cmudict.dict()
 
-arr = os.listdir("./")
+arr = os.listdir("./DadBot/")
 print(arr)
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again. - HAIKUDETECTOR - " + str(os.path))
