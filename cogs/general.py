@@ -16,6 +16,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from noncommands import summarizer
 
+print(os.path)
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
 else:
