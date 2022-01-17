@@ -13,6 +13,6 @@ jobs:
       with:
         server: na731.pebblehost.com
         username: pebblehost@colinwilson.dev.251416
-        password: ${{ secrets.password }}
+        password: ${{ secrets.FTP_PASSWORD }}
         server-dir: DadBot/
         port: 21
