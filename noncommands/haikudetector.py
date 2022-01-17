@@ -5,7 +5,7 @@ import os
 import cmudict
 
 cd = cmudict.dict()
-
+os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 

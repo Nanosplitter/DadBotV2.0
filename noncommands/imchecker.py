@@ -5,7 +5,7 @@ import sys
 import os
 import mysql.connector
 import random
-
+os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
