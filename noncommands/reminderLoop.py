@@ -2,7 +2,8 @@ import yaml
 import sys
 import os
 import mysql.connector
-
+if "DadBot" not in str(os.getcwd()):
+    os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
@@ -18,7 +19,7 @@ class ReminderLoop:
         )
         mycursor = mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT * FROM dad.reminders WHERE remind_time <= UTC_TIMESTAMP();")
+        mycursor.execute("SELECT * FROM reminders WHERE remind_time <= UTC_TIMESTAMP();")
 
         for m in mycursor:
             print(m)
@@ -47,7 +48,7 @@ class ReminderLoop:
         )
         mycursor = mydb.cursor(buffered=True)
         
-        mycursor.execute("DELETE FROM dad.reminders WHERE remind_time <= UTC_TIMESTAMP();")
+        mycursor.execute("DELETE FROM reminders WHERE remind_time <= UTC_TIMESTAMP();")
 
         mydb.commit()
         mycursor.close()

@@ -5,7 +5,6 @@ import os
 import cmudict
 
 cd = cmudict.dict()
-print("haikudetector:", os.getcwd())
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:

@@ -3,7 +3,8 @@ import sys
 import os
 import requests
 import random
-
+if "DadBot" not in str(os.getcwd()):
+    os.chdir("./DadBot")
 with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
