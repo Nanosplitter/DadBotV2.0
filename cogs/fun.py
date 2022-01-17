@@ -14,7 +14,6 @@ import requests
 import uuid
 import inspirobot
 import uwuify
-import language_tool_python
 import contractions
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
@@ -24,7 +23,6 @@ with open("config.yaml") as file:
 
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
-        self.languageTool = language_tool_python.LanguageTool('en-US')
         self.bot = bot
 
     @commands.command(name="randomfact")
@@ -208,16 +206,6 @@ class Fun(commands.Cog, name="fun"):
         message = await context.channel.fetch_message(context.message.reference.message_id)
         flags = uwuify.SMILEY | uwuify.YU
         await context.reply(uwuify.uwu(message.content, flags=flags))
-    
-    @commands.command(name="antiuwu")
-    async def antiuwu(self, context):
-        """
-        UwU but scholarly
-        """
-        message = await context.channel.fetch_message(context.message.reference.message_id)
-        text = message.content
-        corrected = contractions.fix(self.languageTool.correct(text))
-        await context.reply(corrected)
 
     @commands.command(name="blockeningSupport")
     async def blockeningSupport(self, context):
