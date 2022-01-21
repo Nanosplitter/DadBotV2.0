@@ -156,6 +156,21 @@ class general(commands.Cog, name="general"):
         else:
             await context.reply("I can't understand that time, try again but differently")
 
+    @commands.command(name="tldrchannel")
+    async def tldrchannel(self, context, param):
+        """
+        Get a TLDR of X number of past messages on the channel.
+        """
+        if param.isnumeric() and int(param) >= 5:
+            messages = await context.channel.history(limit=int(param)).flatten()
+            text = ". ".join([m.content for m in messages])
+            text = text.replace(".. ", ". ")
+            embed = summarizer.getSummaryText(config, text)
+        else:
+            await context.reply(f'That number is either not a number or is less than 5. Try `{config["bot_prefix"]}tldrchannel 5` or higher')
+            return
+
+        await context.send(embed=embed)
     
     @commands.command(name="tldr")
     async def tldr(self, context, url):
