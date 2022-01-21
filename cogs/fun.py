@@ -9,12 +9,11 @@ import hashlib
 import discord
 import yaml
 from discord.ext import commands
-from discord.ext.commands import BucketType
 import requests
 import uuid
 import inspirobot
 import uwuify
-import contractions
+
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:

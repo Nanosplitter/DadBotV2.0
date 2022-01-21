@@ -118,7 +118,7 @@ def getSummaryMono(text, numSent):
     return [i[0] for i in chosen]
 
 
-def getSummary(config, url):
+def getSummaryUrl(config, url):
     numSent = 5
     downloaded = trafilatura.fetch_url(url)
     article = bare_extraction(downloaded)
@@ -133,6 +133,19 @@ def getSummary(config, url):
     embed.add_field(
         name="Summary:",
         value="\n".join(getSummaryMono(article["text"], numSent)),
+        inline = False
+    )
+
+    return embed
+
+def getSummaryText(config, text):
+    numSent = 5
+    embed = discord.Embed(
+        color=config["success"]
+    )
+    embed.add_field(
+        name="Summary:",
+        value="\n".join(getSummaryMono(text, numSent)),
         inline = False
     )
 
