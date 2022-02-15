@@ -13,6 +13,7 @@ import requests
 import uuid
 import inspirobot
 import uwuify
+import json
 
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
@@ -23,6 +24,8 @@ with open("config.yaml") as file:
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.bot = bot
+        with open("./resources/emoji-mappings.json") as file:
+            self.emoji_mappings = json.load(file)
 
     @commands.command(name="randomfact")
     async def randomfact(self, context):
@@ -43,6 +46,19 @@ class Fun(commands.Cog, name="fun"):
                         color=config["error"]
                     )
                     await context.reply(embed=embed)
+    
+    @commands.command(name="pastafy")
+    async def pastafy(self, context):
+        """
+        Turns any message into a copypasta.
+        """
+        
+        message = await context.channel.fetch_message(context.message.reference.message_id)
+        res = ""
+        for word in message.content.split(" "):
+            res += word + (" " + random.choice(self.emoji_mappings[word.lower()]) + " " if word in self.emoji_mappings else " ")
+        await message.reply(res)
+        
 
     @commands.command(name="dadjoke")
     async def dadjoke(self, context, searchTerm="", *args):
@@ -205,22 +221,6 @@ class Fun(commands.Cog, name="fun"):
         message = await context.channel.fetch_message(context.message.reference.message_id)
         flags = uwuify.SMILEY | uwuify.YU
         await context.reply(uwuify.uwu(message.content, flags=flags))
-
-    @commands.command(name="blockeningSupport")
-    async def blockeningSupport(self, context):
-        """
-        For support
-        """
-        channel = context.author.voice.channel
-        await context.reply("On my way!")
-        await channel.connect()
-    
-    @commands.command(name="drawerpc")
-    async def newperson(self, context):
-        """
-        Replies with "DRAWER PC DRAWER PC"
-        """
-        await context.send("DRAWER PC DRAWER PC")
         
     @commands.command(name="newcat")
     async def newcat(self, context):
