@@ -61,7 +61,6 @@ class Fun(commands.Cog, name="fun"):
         except:
             context.send("Something went wrong, you have to reply to a message for me to pastafy it.")
         
-
     @commands.command(name="dadjoke")
     async def dadjoke(self, context, searchTerm="", *args):
         """
