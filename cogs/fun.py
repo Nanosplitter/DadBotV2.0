@@ -52,12 +52,14 @@ class Fun(commands.Cog, name="fun"):
         """
         Turns any message into a copypasta.
         """
-        
-        message = await context.channel.fetch_message(context.message.reference.message_id)
-        res = ""
-        for word in message.content.split(" "):
-            res += word + (" " + random.choice(self.emoji_mappings[word.lower()]) + " " if word in self.emoji_mappings else " ")
-        await message.reply(res)
+        try:
+            message = await context.channel.fetch_message(context.message.reference.message_id)
+            res = ""
+            for word in message.content.split(" "):
+                res += word + (" " + random.choice(self.emoji_mappings[word.lower()]) + " " if word in self.emoji_mappings else " ")
+            await message.reply(res)
+        except:
+            context.send("Something went wrong, you have to reply to a message for me to pastafy it.")
         
 
     @commands.command(name="dadjoke")
