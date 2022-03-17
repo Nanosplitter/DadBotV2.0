@@ -223,6 +223,16 @@ class Fun(commands.Cog, name="fun"):
         flags = uwuify.SMILEY | uwuify.YU
         await context.reply(uwuify.uwu(message.content, flags=flags))
         
+    @commands.command(name="newdog")
+    async def newdog(self, context):
+        """
+        Gets a random dog pic from https://random.dog
+        """
+        url = "https://random.dog/woof.json"
+        response = requests.get(url)
+        json = response.json()
+        await context.reply(json["url"])
+        
     @commands.command(name="newcat")
     async def newcat(self, context):
         """
