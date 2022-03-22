@@ -127,7 +127,7 @@ async def checkReminders():
 
 checkReminders.start()
 scheduler = AsyncIOScheduler()
-scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "19", minute = "0", second = "0", timezone="EST"))
-scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="thu", hour = "0", minute = "0", second = "0", timezone="EST"))
+scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "18", minute = "0", second = "0", timezone="EST"))
+scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="wed", hour = "23", minute = "0", second = "0", timezone="EST"))
 scheduler.start()
 bot.run(config["token"])
