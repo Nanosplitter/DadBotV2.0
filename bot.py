@@ -78,8 +78,8 @@ async def on_message(message):
         return
     
     if (message.author.id == 293482309296848896):
-        message.add_reaction("👀")
-        message.add_reaction("🤔")
+        await message.add_reaction("👀")
+        await message.add_reaction("🤔")
     
     await imChecker.checkIm(message)
 
