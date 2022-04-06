@@ -77,10 +77,6 @@ async def on_message(message):
     if message.author.id in config["blacklist"]:
         return
     
-    if (message.author.id == 293482309296848896):
-        await message.add_reaction("👀")
-        await message.add_reaction("🤔")
-    
     await imChecker.checkIm(message)
 
     await antiMayhem.gotem(message)
