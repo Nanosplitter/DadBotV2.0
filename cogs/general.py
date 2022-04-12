@@ -138,6 +138,9 @@ class general(commands.Cog, name="general"):
     
     @commands.command(name="changecolor")
     async def changecolor(self, context, color):
+        """
+        Allows the user to change the color of their nickname. Only usable in some servers.
+        """
         try:
             if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
                 return
