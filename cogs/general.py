@@ -144,7 +144,7 @@ class general(commands.Cog, name="general"):
         try:
             if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
                 return
-            if self.contrast("#36393f", color) < 3:
+            if self.contrast("#36393f", color) < 2:
                 embed = discord.Embed(
                     title="Error",
                     description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(self.contrast("#36393f", color), 4)) + ". It needs to be above 3.",
