@@ -141,35 +141,35 @@ class general(commands.Cog, name="general"):
         """
         Allows the user to change the color of their nickname. Only usable in some servers.
         """
-        # try:
-        if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
-            return
-        if self.contrast("#36393f", color) < 2:
+        try:
+            if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
+                return
+            if self.contrast("#36393f", color) < 2:
+                embed = discord.Embed(
+                    title="Error",
+                    description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(self.contrast("#36393f", color), 4)) + ". It needs to be above 2.",
+                    color=int(color.replace("#", ""), 16)
+                )
+                await context.send(embed=embed)
+                return
+            userRoles = context.message.author.roles
+
+            if len(userRoles) > 1:
+                topRole = userRoles[-1]
+                await topRole.edit(colour=discord.Colour(int(color.replace("#", ""), 16)))
+                embed = discord.Embed(
+                    title="Success!",
+                    description="Color has been changed!",
+                    color=int(color.replace("#", ""), 16)
+                )
+                await context.send(embed=embed)
+        except:
             embed = discord.Embed(
                 title="Error",
-                description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(self.contrast("#36393f", color), 4)) + ". It needs to be above 3.",
-                color=int(color.replace("#", ""), 16)
+                description="Something went wrong, make sure you are using a 6 digit hex code. (ex: !changecolor #FFFFFF)",
+                color=config["error"]
             )
             await context.send(embed=embed)
-            return
-        userRoles = context.message.author.roles
-
-        if len(userRoles) > 1:
-            topRole = userRoles[-1]
-            await topRole.edit(colour=discord.Colour(int(color.replace("#", ""), 16)))
-            embed = discord.Embed(
-                title="Success!",
-                description="Color has been changed!",
-                color=int(color.replace("#", ""), 16)
-            )
-            await context.send(embed=embed)
-        # except:
-        #     embed = discord.Embed(
-        #         title="Error",
-        #         description="Something went wrong, make sure you are using a 6 digit hex code. (ex: !changecolor #FFFFFF)",
-        #         color=config["error"]
-        #     )
-        #     await context.send(embed=embed)
 
     @commands.command(name="remindme")
     async def remindme(self, context, *args):
