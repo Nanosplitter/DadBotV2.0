@@ -77,11 +77,10 @@ async def on_message(message):
     if message.author.id in config["blacklist"]:
         return
     
-    await imChecker.checkIm(message)
-
-    await antiMayhem.gotem(message)
-
-    await haikuDetector.checkForHaiku(message)
+    if not re.search("(\|\|[\S\s]*\|\|)", message.content):
+        await imChecker.checkIm(message)
+        await antiMayhem.gotem(message)
+        await haikuDetector.checkForHaiku(message)
 
     await bot.process_commands(message)
 
