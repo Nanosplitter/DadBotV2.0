@@ -126,7 +126,17 @@ class general(commands.Cog, name="general"):
         """
         Calculate the luminance of a color.
         """
-        return (0.299 * Color(color).red + 0.587 * Color(color).green + 0.0722 * Color(color).blue)
+        red = Color(color).red
+        green = Color(color).green
+        blue = Color(color).blue
+
+        red = red / 12.92 if red <= 0.04045 else ((red + 0.055) / 1.055)**2.4
+        green = green / 12.92 if green <= 0.04045 else ((green + 0.055) / 1.055)**2.4
+        blue = blue / 12.92 if blue <= 0.04045 else ((blue + 0.055) / 1.055)**2.4
+
+        print(color, red, green, blue)
+
+        return (0.2126 * red) + (0.7152 * green) + (0.0722 * blue)
 
     def contrast(self, color1, color2):
         """
@@ -134,6 +144,7 @@ class general(commands.Cog, name="general"):
         """
         lum1 = self.luminance(color1)
         lum2 = self.luminance(color2)
+
         return (max(lum1, lum2) + 0.05) / (min(lum1, lum2) + 0.05)
     
     @commands.command(name="changecolor")
@@ -144,10 +155,14 @@ class general(commands.Cog, name="general"):
         try:
             if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
                 return
-            if self.contrast("#36393f", color) < 2:
+            
+            limit = 4
+            contrast = self.contrast("#36393f", color)
+
+            if contrast < limit:
                 embed = discord.Embed(
                     title="Error",
-                    description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(self.contrast("#36393f", color), 4)) + ". It needs to be above 2.",
+                    description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above 4:1.",
                     color=int(color.replace("#", ""), 16)
                 )
                 await context.send(embed=embed)
@@ -159,7 +174,7 @@ class general(commands.Cog, name="general"):
                 await topRole.edit(colour=discord.Colour(int(color.replace("#", ""), 16)))
                 embed = discord.Embed(
                     title="Success!",
-                    description="Color has been changed!",
+                    description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
                     color=int(color.replace("#", ""), 16)
                 )
                 await context.send(embed=embed)
