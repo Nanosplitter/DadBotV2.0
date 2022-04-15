@@ -1,9 +1,9 @@
 import os
 import sys
 import random
-import discord
+import nextcord
 import yaml
-from discord.ext import commands
+from nextcord.ext import commands
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:
@@ -16,12 +16,12 @@ class moderation(commands.Cog, name="moderation"):
 
     @commands.command(name='kick', pass_context=True)
     @commands.has_permissions(kick_members=True)
-    async def kick(self, context, member: discord.Member, *args):
+    async def kick(self, context, member: nextcord.Member, *args):
         """
         Kick a user out of the server.
         """
         if member.guild_permissions.administrator:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title="Error!",
                 description="User has Admin permissions.",
                 color=config["error"]
@@ -31,7 +31,7 @@ class moderation(commands.Cog, name="moderation"):
             try:
                 reason = " ".join(args)
                 await member.kick(reason=reason)
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title="User Kicked!",
                     description=f"**{member}** was kicked by **{context.message.author}**!",
                     color=config["success"]
@@ -48,7 +48,7 @@ class moderation(commands.Cog, name="moderation"):
                 except:
                     pass
             except:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title="Error!",
                     description="An error occurred while trying to kick the user.",
                     color=config["success"]
@@ -57,7 +57,7 @@ class moderation(commands.Cog, name="moderation"):
 
     @commands.command(name="nick")
     @commands.has_permissions(manage_nicknames=True)
-    async def nick(self, context, member: discord.Member, *, name: str):
+    async def nick(self, context, member: nextcord.Member, *, name: str):
         """
         Change the nickname of a user on a server.
         """
@@ -65,14 +65,14 @@ class moderation(commands.Cog, name="moderation"):
             if name.lower() == "!reset":
                 name = None
             await member.edit(nick=name)
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title="Changed Nickname!",
                 description=f"**{member}'s** new nickname is **{name}**!",
                 color=config["success"]
             )
             await context.send(embed=embed)
         except Exception as e:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title="Error!",
                 description="An error occurred while trying to change the nickname of the user.",
                 color=config["success"]
@@ -82,7 +82,7 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="clean")
     async def clean(self, context, num="1"):
         """
-        Solves many problems. (Limited by Discord to max out at 333)
+        Solves many problems. (Limited by nextcord to max out at 333)
         """
         try:
             message = await context.channel.fetch_message(context.message.reference.message_id)
@@ -102,13 +102,13 @@ class moderation(commands.Cog, name="moderation"):
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
-    async def ban(self, context, member: discord.Member, *args):
+    async def ban(self, context, member: nextcord.Member, *args):
         """
         Bans a user from the server.
         """
         try:
             if member.guild_permissions.administrator:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title="Error!",
                     description="User has Admin permissions.",
                     color=config["success"]
@@ -117,7 +117,7 @@ class moderation(commands.Cog, name="moderation"):
             else:
                 reason = " ".join(args)
                 await member.ban(reason=reason)
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title="User Banned!",
                     description=f"**{member}** was banned by **{context.message.author}**!",
                     color=config["success"]
@@ -129,7 +129,7 @@ class moderation(commands.Cog, name="moderation"):
                 await context.send(embed=embed)
                 await member.send(f"You were banned by **{context.message.author}**!\nReason: {reason}")
         except:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title="Error!",
                 description="An error occurred while trying to ban the user.",
                 color=config["success"]
@@ -138,12 +138,12 @@ class moderation(commands.Cog, name="moderation"):
 
     @commands.command(name="warn")
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, context, member: discord.Member, *args):
+    async def warn(self, context, member: nextcord.Member, *args):
         """
         Warns a user in their private messages.
         """
         reason = " ".join(args)
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title="User Warned!",
             description=f"**{member}** was warned by **{context.message.author}**!",
             color=config["success"]

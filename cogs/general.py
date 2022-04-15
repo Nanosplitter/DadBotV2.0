@@ -11,10 +11,10 @@ from dateparser.search import search_dates
 from colour import Color
 
 import aiohttp
-import discord
+import nextcord
 import yaml
-from discord.ext import commands
-from discord.ext import tasks
+from nextcord.ext import commands
+from nextcord.ext import tasks
 from noncommands import summarizer
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
@@ -31,7 +31,7 @@ class general(commands.Cog, name="general"):
         """
         Get some useful (or not) information about the bot.
         """
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             description="The server's dad",
             color=config["success"]
         )
@@ -75,7 +75,7 @@ class general(commands.Cog, name="general"):
         time = time.split(" ")
         time = time[0]
 
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title="**Server Name:**",
             description=f"{server}",
             color=config["success"]
@@ -109,7 +109,7 @@ class general(commands.Cog, name="general"):
         """
         Check if the bot is alive.
         """
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             color=config["success"]
         )
         embed.add_field(
@@ -160,7 +160,7 @@ class general(commands.Cog, name="general"):
             contrast = self.contrast("#36393f", color)
 
             if contrast < limit:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title="Error",
                     description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above 4:1.",
                     color=int(color.replace("#", ""), 16)
@@ -171,15 +171,15 @@ class general(commands.Cog, name="general"):
 
             if len(userRoles) > 1:
                 topRole = userRoles[-1]
-                await topRole.edit(colour=discord.Colour(int(color.replace("#", ""), 16)))
-                embed = discord.Embed(
+                await topRole.edit(colour=nextcord.Colour(int(color.replace("#", ""), 16)))
+                embed = nextcord.Embed(
                     title="Success!",
                     description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
                     color=int(color.replace("#", ""), 16)
                 )
                 await context.send(embed=embed)
         except:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title="Error",
                 description="Something went wrong, make sure you are using a 6 digit hex code. (ex: !changecolor #FFFFFF)",
                 color=config["error"]
@@ -287,7 +287,7 @@ class general(commands.Cog, name="general"):
         Create a poll where members can vote.
         """
         poll_title = " ".join(args)
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title="A new poll has been created!",
             description=f"{poll_title}",
             color=config["success"]
@@ -310,7 +310,7 @@ class general(commands.Cog, name="general"):
                    'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.',
                    'Cannot predict now.', 'Concentrate and ask again later.', 'Don\'t count on it.', 'My reply is no.',
                    'My sources say no.', 'Outlook not so good.', 'Very doubtful.']
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title="**My Answer:**",
             description=f"{answers[random.randint(0, len(answers) - 1)]}",
             color=config["success"]
@@ -331,7 +331,7 @@ class general(commands.Cog, name="general"):
             raw_response = await session.get(url)
             response = await raw_response.text()
             response = json.loads(response)
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title=":information_source: Info",
                 description=f"Bitcoin price is: ${response['bpi']['USD']['rate']}",
                 color=config["success"]

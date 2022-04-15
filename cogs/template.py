@@ -2,7 +2,7 @@ import os
 import sys
 
 import yaml
-from discord.ext import commands
+from nextcord.ext import commands
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:

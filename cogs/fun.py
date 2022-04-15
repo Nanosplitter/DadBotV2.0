@@ -6,9 +6,9 @@ import sys
 import aiohttp
 import aiofiles
 import hashlib
-import discord
+import nextcord
 import yaml
-from discord.ext import commands
+from nextcord.ext import commands
 import requests
 import uuid
 import inspirobot
@@ -32,15 +32,15 @@ class Fun(commands.Cog, name="fun"):
         """
         Dad has learned a few things, he'll share.
         """
-        # This will prevent your bot from stopping everything when doing a web request - see: https://discordpy.readthedocs.io/en/stable/faq.html#how-do-i-make-a-web-request
+        # This will prevent your bot from stopping everything when doing a web request - see: https://nextcordpy.readthedocs.io/en/stable/faq.html#how-do-i-make-a-web-request
         async with aiohttp.ClientSession() as session:
             async with session.get("https://uselessfacts.jsph.pl/random.json?language=en") as request:
                 if request.status == 200:
                     data = await request.json()
-                    embed = discord.Embed(description=data["text"], color=config["main_color"])
+                    embed = nextcord.Embed(description=data["text"], color=config["main_color"])
                     await context.send(embed=embed)
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title="Error!",
                         description="There is something wrong with the API, please try again later",
                         color=config["error"]
@@ -158,7 +158,7 @@ class Fun(commands.Cog, name="fun"):
             "🧻": 1,
             "✂": 2
         }
-        embed = discord.Embed(title="Please choose", color=config["warning"])
+        embed = nextcord.Embed(title="Please choose", color=config["warning"])
         embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
         choose_message = await context.send(embed=embed)
         for emoji in reactions:
@@ -176,7 +176,7 @@ class Fun(commands.Cog, name="fun"):
             bot_choice_emote = random.choice(list(reactions.keys()))
             bot_choice_index = reactions[bot_choice_emote]
 
-            result_embed = discord.Embed(color=config["success"])
+            result_embed = nextcord.Embed(color=config["success"])
             result_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
             await choose_message.clear_reactions()
 
@@ -199,7 +199,7 @@ class Fun(commands.Cog, name="fun"):
             await choose_message.edit(embed=result_embed)
         except asyncio.exceptions.TimeoutError:
             await choose_message.clear_reactions()
-            timeout_embed = discord.Embed(title="Too late", color=config["error"])
+            timeout_embed = nextcord.Embed(title="Too late", color=config["error"])
             timeout_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
             await choose_message.edit(embed=timeout_embed)
     
@@ -210,7 +210,7 @@ class Fun(commands.Cog, name="fun"):
         """
         fileName = str(uuid.uuid1()) + str(random.choice(range(1, 1337))) + ".png"
         await self.save_online_person(fileName)
-        file = discord.File(fileName, filename="newperson.png")
+        file = nextcord.File(fileName, filename="newperson.png")
         await context.send("", file=file)
         os.remove(fileName)
     
@@ -240,7 +240,7 @@ class Fun(commands.Cog, name="fun"):
         """
         fileName = str(uuid.uuid1()) + str(random.choice(range(1, 1337))) + ".png"
         await self.save_online_cat(fileName)
-        file = discord.File(fileName, filename="newcat.png")
+        file = nextcord.File(fileName, filename="newcat.png")
         await context.send("", file=file)
         os.remove(fileName)
 

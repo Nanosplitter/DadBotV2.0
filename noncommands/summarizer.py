@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from trafilatura import bare_extraction
 import trafilatura
-import discord
+import nextcord
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -122,7 +122,7 @@ def getSummaryUrl(config, url):
     numSent = 5
     downloaded = trafilatura.fetch_url(url)
     article = bare_extraction(downloaded)
-    embed = discord.Embed(
+    embed = nextcord.Embed(
         color=config["success"]
     )
     embed.add_field(
@@ -140,7 +140,7 @@ def getSummaryUrl(config, url):
 
 def getSummaryText(config, text):
     numSent = 5
-    embed = discord.Embed(
+    embed = nextcord.Embed(
         color=config["success"]
     )
     embed.add_field(

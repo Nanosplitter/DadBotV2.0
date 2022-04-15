@@ -1,7 +1,7 @@
 aiohttp
 asyncio
-discord
-discord.py[voice]
+nextcord
+nextcord.py[voice]
 pyyaml
 pandas
 mysql
