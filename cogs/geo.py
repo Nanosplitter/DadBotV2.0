@@ -1,5 +1,6 @@
 from io import BytesIO
 import os
+import re
 import sys
 import aiofiles
 from discord import Embed
@@ -46,11 +47,11 @@ class Geo(commands.Cog, name="geo"):
             location = random.choice(self.geodata)
             city = location["name"]
             country = location["country"]
-            r = requests.get(f"https://maps.googleapis.com/maps/api/streetview/metadata?size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&key={ config['maps_api_key'] }")
+            r = requests.get(f"https://maps.googleapis.com/maps/api/streetview/metadata?radius=3000&source=outdoor&size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&key={ config['maps_api_key'] }")
             loc = geolocator.geocode(f'{city},{country}')
             status = r.json()["status"]
 
-        urllib.request.urlretrieve(f"https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&fov=100&heading=0&pitch=0&key={ config['maps_api_key'] }", "geo.jpg")
+        urllib.request.urlretrieve(f"https://maps.googleapis.com/maps/api/streetview?radius=3000&source=outdoor&size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&fov=100&heading=0&pitch=0&key={ config['maps_api_key'] }", "geo.jpg")
 
         await context.send("", file=nextcord.File("geo.jpg"))
         os.remove("geo.jpg")
@@ -63,7 +64,7 @@ class Geo(commands.Cog, name="geo"):
         embedMessage = await context.send(embed=embed)
 
         def check(m):
-            if m.author.bot or m.channel != context.channel:
+            if m.author.bot or m.channel != context.channel or not re.search("(\|\|[\S\s]*\|\|)", m.content):
                 return
             try:
                 guessText = m.content.replace("||", "")
@@ -72,8 +73,8 @@ class Geo(commands.Cog, name="geo"):
                 
                 guess = (guess.latitude, guess.longitude)
                 distance = hs.haversine(guess,correctLocation, unit=hs.Unit.MILES)
-                guesses["{}".format(m.author.name)] = (distance, guessText)
-                players = sorted(guesses.keys(), key=lambda x: guesses[x][0])
+                guesses["{}".format(m.author.name)] = (distance, guessText, len(guesses.keys()))
+                players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
 
                 newEmbed = nextcord.Embed(title=f"Guesses will go here!")
                 for i, author in enumerate(players):
@@ -81,6 +82,7 @@ class Geo(commands.Cog, name="geo"):
                 loop = asyncio.get_event_loop()
                 loop.create_task(embedMessage.edit(embed=newEmbed))
                 loop.create_task(m.add_reaction("✅"))
+                loop.create_task(m.delete())
             except:
                 loop = asyncio.get_event_loop()
                 loop.create_task(m.add_reaction("❌"))
@@ -91,7 +93,7 @@ class Geo(commands.Cog, name="geo"):
         except:
             pass
         newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!")
-        players = sorted(guesses.keys(), key=lambda x: guesses[x][0])
+        players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
         for i, author in enumerate(players):
             newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)", inline=True)
         loop = asyncio.get_event_loop()
