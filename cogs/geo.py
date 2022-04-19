@@ -77,7 +77,7 @@ class Geo(commands.Cog, name="geo"):
 
                 newEmbed = nextcord.Embed(title=f"Guesses will go here!")
                 for i, author in enumerate(players):
-                    newEmbed.add_field(name=i+1, value=f"{author}")
+                    newEmbed.add_field(name=i+1, value=f"{author}", inline=True)
                 loop = asyncio.get_event_loop()
                 loop.create_task(embedMessage.edit(embed=newEmbed))
                 loop.create_task(m.add_reaction("✅"))
@@ -91,8 +91,9 @@ class Geo(commands.Cog, name="geo"):
         except:
             pass
         newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!")
-        for i, author in enumerate(guesses):
-            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)")
+        players = sorted(guesses.keys(), key=lambda x: guesses[x][0])
+        for i, author in enumerate(players):
+            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)", inline=True)
         loop = asyncio.get_event_loop()
         loop.create_task(embedMessage.edit(embed=newEmbed))
         await context.send(f"Guessing is done!")
