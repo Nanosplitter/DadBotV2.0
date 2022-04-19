@@ -22,3 +22,7 @@ tensorflow
 cmudict
 contractions
 language-tool-python
+colour
+geopy
+Nominatim
+haversine
