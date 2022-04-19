@@ -41,7 +41,7 @@ class Geo(commands.Cog, name="geo"):
         status = "ZERO_RESULTS"
         loc = None
 
-        rulesEmbed = Embed(title="Welcome to Geo Guesser!", description="You will have one minute to guess the location of the picture. To guess, use ||spoilers|| around your guess as to not show the other players your guess. Just send your guess in this channel! If I can read it, I'll put a ✅ under it and if I can't I'll put a ❌. Good luck!")
+        rulesEmbed = Embed(title="Welcome to Geo Guesser!", description="You will have one minute to guess the location of the picture. To guess, use ||spoilers|| around your guess as to not show the other players your guess. Just send your guess in this channel! If I can read it, I'll put a ✅ under it and delete it, and if I can't I'll put a ❌. Good luck!")
         await context.send(embed=rulesEmbed)
         while(status == "ZERO_RESULTS" or loc is None):
             location = random.choice(self.geodata)
