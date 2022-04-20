@@ -75,7 +75,14 @@ class Geo(commands.Cog, name="geo"):
                 
                 guess = (guess.latitude, guess.longitude)
                 distance = hs.haversine(guess,correctLocation, unit=hs.Unit.MILES)
-                guesses["{}".format(m.author.name)] = (distance, guessText, len(guesses.keys()))
+                userRoles = context.message.author.roles
+                color = "white"
+                if len(userRoles) > 1:
+                    topRole = userRoles[-1]
+                    color = str(topRole.color).replace("#", "")
+                    color = "0x" + color
+
+                guesses["{}".format(m.author.name)] = (distance, guessText, len(guesses.keys()), color)
                 players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
 
                 newEmbed = nextcord.Embed(title=f"Guesses will go here!")
@@ -94,14 +101,25 @@ class Geo(commands.Cog, name="geo"):
             await self.bot.wait_for("message", timeout=60.0, check=check)
         except:
             pass
-        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!\n{correctLocation}")
+        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!\n[maps link](https://maps.google.com/?q={correctLocation[0]},{correctLocation[1]})")
         players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
+
+        mapurl = f"https://maps.googleapis.com/maps/api/staticmap?size=640x640&scale=3&markers=color:green%7Clabel:CORRECT%7C{correctLocation[0]},{correctLocation[1]}|"
+
         for i, author in enumerate(players):
             authorloc = geolocator.geocode(f'{guesses[author][1]}')
-            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)\n{authorloc.latitude, authorloc.longitude}", inline=True)
+            mapurl += f"&markers=size:small%7Ccolor:{guesses[author][3]}%7Clabel:{author}%7C{authorloc.latitude},{authorloc.longitude}|"
+            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)\n[maps link](https://maps.google.com/?q={authorloc.latitude},{authorloc.longitude})", inline=True)
         loop = asyncio.get_event_loop()
         loop.create_task(embedMessage.edit(embed=newEmbed))
         await context.send(f"Guessing is done!")
+
+        
+        print(f"{mapurl}&key={ config['maps_api_key'] }")
+        
+        urllib.request.urlretrieve(f"{mapurl}&key={ config['maps_api_key'] }", f"answer{rand}.png")
+        await context.send("", file=nextcord.File(f"answer{rand}.png"))
+        os.remove(f"answer{rand}.png")
 
 
 # And then we finally add the cog to the bot so that it can load, unload, reload and use it's content.
