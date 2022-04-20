@@ -75,7 +75,7 @@ class Geo(commands.Cog, name="geo"):
                 
                 guess = (guess.latitude, guess.longitude)
                 distance = hs.haversine(guess,correctLocation, unit=hs.Unit.MILES)
-                userRoles = context.message.author.roles
+                userRoles = m.author.roles
                 color = "white"
                 if len(userRoles) > 1:
                     topRole = userRoles[-1]
@@ -101,7 +101,7 @@ class Geo(commands.Cog, name="geo"):
             await self.bot.wait_for("message", timeout=60.0, check=check)
         except:
             pass
-        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!\n[maps link](https://maps.google.com/?q={correctLocation[0]},{correctLocation[1]})")
+        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!\n(https://maps.google.com/?q={correctLocation[0]},{correctLocation[1]})")
         players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
 
         mapurl = f"https://maps.googleapis.com/maps/api/staticmap?size=640x640&scale=3&markers=color:green%7Clabel:CORRECT%7C{correctLocation[0]},{correctLocation[1]}|"
