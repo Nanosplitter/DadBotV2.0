@@ -108,7 +108,7 @@ class Geo(commands.Cog, name="geo"):
 
         for i, author in enumerate(players):
             authorloc = geolocator.geocode(f'{guesses[author][1]}')
-            mapurl += f"&markers=size:small%7Ccolor:{guesses[author][3]}%7Clabel:{author}%7C{authorloc.latitude},{authorloc.longitude}|"
+            mapurl += f"&markers=size:small%7Ccolor:{guesses[author][3]}%7C{authorloc.latitude},{authorloc.longitude}|"
             newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)\n[maps link](https://maps.google.com/?q={authorloc.latitude},{authorloc.longitude})", inline=True)
         loop = asyncio.get_event_loop()
         loop.create_task(embedMessage.edit(embed=newEmbed))
