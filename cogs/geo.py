@@ -97,7 +97,8 @@ class Geo(commands.Cog, name="geo"):
         newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!")
         players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
         for i, author in enumerate(players):
-            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)", inline=True)
+            authorloc = geolocator.geocode(f'{guesses[author][1]}')
+            newEmbed.add_field(name=i+1, value=f"{author}: {guesses[author][1]} ({round(guesses[author][0], 2)} miles away)\n{authorloc.latitude, authorloc.longitude}", inline=True)
         loop = asyncio.get_event_loop()
         loop.create_task(embedMessage.edit(embed=newEmbed))
         await context.send(f"Guessing is done!")
