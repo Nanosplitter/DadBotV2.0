@@ -41,6 +41,9 @@ class Geo(commands.Cog, name="geo"):
         status = "ZERO_RESULTS"
         loc = None
 
+        # get a random number between 1 and 100
+        rand = random.randint(1, 10000)
+
         rulesEmbed = Embed(title="Welcome to Geo Guesser!", description="You will have one minute to guess the location of the picture. To guess, use ||spoilers|| around your guess as to not show the other players your guess. Just send your guess in this channel! If I can read it, I'll put a ✅ under it and delete it, and if I can't I'll put a ❌. Good luck!")
         await context.send(embed=rulesEmbed)
         while(status == "ZERO_RESULTS" or loc is None):
@@ -51,11 +54,10 @@ class Geo(commands.Cog, name="geo"):
             loc = geolocator.geocode(f'{city},{country}')
             status = r.json()["status"]
 
-        urllib.request.urlretrieve(f"https://maps.googleapis.com/maps/api/streetview?radius=3000&source=outdoor&size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&fov=100&heading=0&pitch=0&key={ config['maps_api_key'] }", "geo.jpg")
+        urllib.request.urlretrieve(f"https://maps.googleapis.com/maps/api/streetview?radius=3000&source=outdoor&size=1000x1000&location={ urllib.parse.quote(f'{city},{country}') }&fov=100&heading=0&pitch=0&key={ config['maps_api_key'] }", f"geo{rand}.jpg")
 
-        await context.send("", file=nextcord.File("geo.jpg"))
-        os.remove("geo.jpg")
-
+        await context.send("", file=nextcord.File(f"geo{rand}.jpg"))
+        os.remove(f"geo{rand}.jpg")
         
         correctLocation = (loc.latitude, loc.longitude)
 
