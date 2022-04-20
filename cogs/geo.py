@@ -94,7 +94,7 @@ class Geo(commands.Cog, name="geo"):
             await self.bot.wait_for("message", timeout=60.0, check=check)
         except:
             pass
-        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!")
+        newEmbed = nextcord.Embed(title=f"The correct location was {city}, {country}!\n{correctLocation}")
         players = sorted(guesses.keys(), key=lambda x: (guesses[x][0], guesses[x][2]))
         for i, author in enumerate(players):
             authorloc = geolocator.geocode(f'{guesses[author][1]}')
