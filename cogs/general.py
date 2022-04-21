@@ -12,6 +12,7 @@ from colour import Color
 
 import aiohttp
 import nextcord
+import requests
 import yaml
 from nextcord.ext import commands
 from nextcord.ext import tasks
@@ -103,6 +104,17 @@ class general(commands.Cog, name="general"):
             text=f"Created at: {time}"
         )
         await context.send(embed=embed)
+    
+    @commands.command(name="nobitches")
+    async def nobitches(self, context, *text):
+        params = {
+            "template_id": "370867422", 
+            "username": "nanosplitter", 
+            "password": config["imgflip_pass"],
+            "text0": " ".join(text),
+        }
+        r = requests.post("https://api.imgflip.com/caption_image", params=params)
+        await context.send(r.json()["data"]["url"])
 
     @commands.command(name="ping")
     async def ping(self, context):
