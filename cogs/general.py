@@ -105,6 +105,44 @@ class general(commands.Cog, name="general"):
         )
         await context.send(embed=embed)
     
+    @commands.command(name="setbirthday")
+    async def setbirthday(self, context, *birthday):
+        """
+        Dad always remembers birthdays.
+        """
+        mydb = mysql.connector.connect(
+            host=config["dbhost"],
+            user=config["dbuser"],
+            password=config["dbpassword"],
+            database=config["databasename"],
+            autocommit=True
+        )
+        timeStr = " ".join(birthday).lower()
+        time = dp.parse(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'})
+        timeWords = timeStr
+        f = '%Y-%m-%d %H:%M:%S'
+        if time is None:
+            searchRes = search_dates(timeStr, settings={'TIMEZONE': 'US/Eastern', 'RETURN_AS_TIMEZONE_AWARE': True, 'PREFER_DATES_FROM': 'future', 'PREFER_DAY_OF_MONTH': 'first'}, languages=['en'])
+            for t in searchRes:
+                time = t[1]
+                timeWords = t[0]
+                break
+            
+        if time is not None:
+            timeUTC = dp.parse(time.strftime(f), settings={'TIMEZONE': 'US/Eastern', 'TO_TIMEZONE': 'UTC'})
+            mycursor = mydb.cursor(buffered=True)
+            mycursor.execute(f"DELETE FROM birthdays WHERE author = '{context.message.author}'")
+            mydb.commit()
+            mycursor.execute("INSERT INTO birthdays (author, mention, channel_id, birthday) VALUES ('"+ str(context.message.author) +"', '"+ str(context.message.author.mention) +"', '"+ str(context.channel.id) +"', '"+ timeUTC.strftime(f) +"')")
+            print(time)
+            await context.reply("Your Birthday is set for: " + time.strftime(f) + " EST \n\nHere's the time I read: " + timeWords)
+            mydb.commit()
+            mycursor.close()
+            mydb.close()
+        else:
+            await context.reply("I can't understand that time, try again but differently")
+
+
     @commands.command(name="nobitches")
     async def nobitches(self, context, *text):
         params = {

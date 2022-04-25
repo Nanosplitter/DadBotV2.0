@@ -9,6 +9,7 @@ from apscheduler.triggers.cron import CronTrigger
 from noncommands import haikudetector
 from noncommands import imchecker
 from noncommands import reminderLoop
+from noncommands import birthdayLoop
 from noncommands import antimayhem
 from noncommands import scooby
 
@@ -29,6 +30,7 @@ bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
 
 imChecker = imchecker.ImChecker()
 reminderChecker = reminderLoop.ReminderLoop()
+birthdayChecker = birthdayLoop.BirthdayLoop(bot)
 antiMayhem = antimayhem.AntiMayhem()
 haikuDetector = haikudetector.HaikuDetector()
 scooby = scooby.Scooby(bot)
@@ -120,13 +122,14 @@ async def on_command_error(context, error):
     raise error
 
 @tasks.loop(seconds=5)
-async def checkReminders():
+async def checkTimes():
     await reminderChecker.checkReminders(bot)
     await reminderChecker.deleteOldReminders(bot)
 
-checkReminders.start()
+checkTimes.start()
 scheduler = AsyncIOScheduler()
 scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "18", minute = "0", second = "0", timezone="EST"))
+scheduler.add_job(birthdayChecker.checkBirthdays, CronTrigger(hour = "9", minute = "0", second = "0", timezone="EST"))
 scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="wed", hour = "23", minute = "0", second = "0", timezone="EST"))
 scheduler.start()
 bot.run(config["token"])
