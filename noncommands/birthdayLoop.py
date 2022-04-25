@@ -11,6 +11,7 @@ class BirthdayLoop:
     def __init__(self, bot):
         self.bot = bot
     async def checkBirthdays(self):
+        print("Running Birthday Checker")
         mydb = mysql.connector.connect(
             host=config["dbhost"],
             user=config["dbuser"],
