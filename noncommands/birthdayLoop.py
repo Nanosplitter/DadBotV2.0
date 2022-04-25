@@ -21,8 +21,7 @@ class BirthdayLoop:
         )
         mycursor = mydb.cursor(buffered=True)
 
-        mycursor.execute("SELECT author, mention, birthday, channel_id FROM birthdays WHERE DAY(birthday) = DAY(CONVERT_TZ(CURDATE(), '+00:00', '-05:00')) AND MONTH(birthday) = MONTH(CONVERT_TZ(CURDATE(), '+00:00', '-05:00'))")
-
+        mycursor.execute("SELECT author, mention, birthday, channel_id FROM birthdays WHERE DAY(birthday) = DAY(CONVERT_TZ(NOW(), '+00:00', '-05:00')) AND MONTH(birthday) = MONTH(CONVERT_TZ(NOW(), '+00:00', '-05:00'))")
         for m in mycursor:
             for channel in self.bot.get_all_channels():
                 if m[3] == str(channel.id):

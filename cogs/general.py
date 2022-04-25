@@ -17,6 +17,7 @@ import yaml
 from nextcord.ext import commands
 from nextcord.ext import tasks
 from noncommands import summarizer
+from noncommands import birthdayLoop
 if "DadBot" not in str(os.getcwd()):
     os.chdir("./DadBot")
 with open("config.yaml") as file:
@@ -26,6 +27,7 @@ with open("config.yaml") as file:
 class general(commands.Cog, name="general"):
     def __init__(self, bot):
         self.bot = bot
+        self.birthdayLoop = birthdayLoop.BirthdayLoop(bot)
 
     @commands.command(name="info", aliases=["botinfo"])
     async def info(self, context):
@@ -141,7 +143,10 @@ class general(commands.Cog, name="general"):
             mydb.close()
         else:
             await context.reply("I can't understand that time, try again but differently")
-
+    
+    @commands.command(name="todaysbirthdays")
+    async def todaysbirthdays(self, context):
+        await self.birthdayLoop.checkBirthdays()
 
     @commands.command(name="nobitches")
     async def nobitches(self, context, *text):
