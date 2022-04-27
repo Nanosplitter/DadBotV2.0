@@ -159,7 +159,7 @@ class Fun(commands.Cog, name="fun"):
             "✂": 2
         }
         embed = nextcord.Embed(title="Please choose", color=config["warning"])
-        embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
+        embed.set_author(name=context.author.display_name, icon_url=context.author.avatar.url)
         choose_message = await context.send(embed=embed)
         for emoji in reactions:
             await choose_message.add_reaction(emoji)
@@ -177,7 +177,7 @@ class Fun(commands.Cog, name="fun"):
             bot_choice_index = reactions[bot_choice_emote]
 
             result_embed = nextcord.Embed(color=config["success"])
-            result_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
+            result_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar.url)
             await choose_message.clear_reactions()
 
             if user_choice_index == bot_choice_index:
@@ -200,7 +200,7 @@ class Fun(commands.Cog, name="fun"):
         except asyncio.exceptions.TimeoutError:
             await choose_message.clear_reactions()
             timeout_embed = nextcord.Embed(title="Too late", color=config["error"])
-            timeout_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
+            timeout_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar.url)
             await choose_message.edit(embed=timeout_embed)
     
     @commands.command(name="newperson")

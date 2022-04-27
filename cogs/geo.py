@@ -31,13 +31,8 @@ class Geo(commands.Cog, name="geo"):
         with open("./resources/geodata.json") as file:
             self.geodata = json.load(file)
         self.bot = bot
-
-    # Here you can just add your own commands, you'll always need to provide "self" as first parameter.
-    @commands.command(name="geo")
-    async def geo(self, context):
-        """
-        Play a round of geo guesser!
-        """
+    
+    async def geoplay(self, context, single=False):
         status = "ZERO_RESULTS"
         loc = None
 
@@ -92,6 +87,8 @@ class Geo(commands.Cog, name="geo"):
                 loop.create_task(embedMessage.edit(embed=newEmbed))
                 loop.create_task(m.add_reaction("✅"))
                 loop.create_task(m.delete())
+                if single:
+                    return True
             except:
                 loop = asyncio.get_event_loop()
                 loop.create_task(m.add_reaction("❌"))
@@ -120,6 +117,21 @@ class Geo(commands.Cog, name="geo"):
         urllib.request.urlretrieve(f"{mapurl}&key={ config['maps_api_key'] }", f"answer{rand}.png")
         await context.send("", file=nextcord.File(f"answer{rand}.png"))
         os.remove(f"answer{rand}.png")
+
+    # Here you can just add your own commands, you'll always need to provide "self" as first parameter.
+    @commands.command(name="geo")
+    async def geo(self, context):
+        """
+        Play a round of geo guesser!
+        """
+        await self.geoplay(context)
+    
+    @commands.command(name="geosingle")
+    async def geosingle(self, context):
+        """
+        Play a round of geo guesser by yourself!
+        """
+        await self.geoplay(context, single=True)
 
 
 # And then we finally add the cog to the bot so that it can load, unload, reload and use it's content.
