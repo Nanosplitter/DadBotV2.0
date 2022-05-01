@@ -106,14 +106,14 @@ class Hangman(commands.Cog, name="hangman"):
 
         def check(m):
             loop = asyncio.get_event_loop()
-            if m.author.bot or m.channel != context.channel:
+            if m.author.bot or m.channel != context.channel or len(m.content) != 1:
                 return
             
-            if not m.content.lower()[0].isalpha():
+            if not m.content.lower().isalpha():
                 loop.create_task(m.add_reaction("❌"))
                 return
             
-            guessed.append(m.content.lower()[0])
+            guessed.append(m.content.lower())
             
             loop.create_task(msg.edit(content=self.buildMessage(answer, guessed)))
             loop.create_task(m.delete())
@@ -121,7 +121,7 @@ class Hangman(commands.Cog, name="hangman"):
             if all(letter in guessed for letter in answer) or len([i for i in guessed if i not in answer]) == (len(HANGMANPICS) - 1):
                 return True
 
-        rulesEmbed = Embed(title="Welcome to Hangman!", description="You will have one 90 seconds to guess the secret word. To guess, just type your letter guess into this channe. If I can read it, delete it and apply it to the game, and if I can't I'll put a ❌. Good luck!")
+        rulesEmbed = Embed(title="Welcome to Hangman!", description="You will have 90 seconds to guess the secret word. To guess, just type your letter into this channel. If I can read it, I will delete it and apply it to the game, and if I can't, I'll put a ❌. Good luck!")
         await context.send(embed=rulesEmbed)
         answer = str(random.choice(self.wordList).lower()).replace("b'", "").replace("'", "")
         msg = await context.send(self.buildMessage(answer, guessed))
