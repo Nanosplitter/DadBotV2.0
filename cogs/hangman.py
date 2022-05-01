@@ -97,7 +97,6 @@ class Hangman(commands.Cog, name="hangman"):
         message += "```"
         return message
 
-    # Here you can just add your own commands, you'll always need to provide "self" as first parameter.
     @commands.command(name="hangman")
     async def hangman(self, context):
         """
@@ -122,7 +121,7 @@ class Hangman(commands.Cog, name="hangman"):
             if all(letter in guessed for letter in answer) or len([i for i in guessed if i not in answer]) == (len(HANGMANPICS) - 1):
                 return True
 
-        rulesEmbed = Embed(title="Welcome to Hangman!", description="You will have one 90 secibds to guess the secret word. To guess, just type your letter guess into this channe. If I can read it, delete it and apply it to the game, and if I can't I'll put a ❌. Good luck!")
+        rulesEmbed = Embed(title="Welcome to Hangman!", description="You will have one 90 seconds to guess the secret word. To guess, just type your letter guess into this channe. If I can read it, delete it and apply it to the game, and if I can't I'll put a ❌. Good luck!")
         await context.send(embed=rulesEmbed)
         answer = str(random.choice(self.wordList).lower()).replace("b'", "").replace("'", "")
         msg = await context.send(self.buildMessage(answer, guessed))
