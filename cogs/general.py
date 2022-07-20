@@ -201,6 +201,19 @@ class general(commands.Cog, name="general"):
         lum2 = self.luminance(color2)
 
         return (max(lum1, lum2) + 0.05) / (min(lum1, lum2) + 0.05)
+
+    def generateRandomColor(self):
+        """
+        Generate random color value
+        """
+        randomColor = hex(random.randint(0, 16777216)) # generate random integer
+        randomColor = randomColor[2:]
+
+        if (len(randomColor) < 6):
+            randomColor = '0' * (6-len(randomColor)) + randomColor
+
+        randomColor = "#" + randomColor
+        return randomColor
     
     @commands.command(name="changecolor")
     async def changecolor(self, context, color):
@@ -210,29 +223,60 @@ class general(commands.Cog, name="general"):
         try:
             if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
                 return
-            
-            limit = 4
-            contrast = self.contrast("#36393f", color)
 
-            if contrast < limit:
-                embed = nextcord.Embed(
-                    title="Error",
-                    description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above 4:1.",
-                    color=int(color.replace("#", ""), 16)
-                )
-                await context.send(embed=embed)
-                return
+            limit = 4
+
             userRoles = context.message.author.roles
 
-            if len(userRoles) > 1:
-                topRole = userRoles[-1]
-                await topRole.edit(colour=nextcord.Colour(int(color.replace("#", ""), 16)))
-                embed = nextcord.Embed(
-                    title="Success!",
-                    description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
-                    color=int(color.replace("#", ""), 16)
-                )
-                await context.send(embed=embed)
+            if color.lower() == "random":
+                if len(userRoles) > 1:
+                    # if color == random, then pick a ranomized color value and apply
+                    # logic for random color
+                    randomColor = self.generateRandomColor()
+
+                    contrast = self.contrast("#36393f", randomColor)
+
+                    if contrast < limit:
+                        # generate new colors and test until contrast > limit
+                        while(contrast < limit):
+                            randomColor = self.generateRandomColor()
+                            contrast = self.contrast("#36393f", randomColor)
+
+                    # apply color
+                    topRole = userRoles[-1]
+                    await topRole.edit(colour=nextcord.Colour(int(randomColor.replace("#", ""), 16)))
+
+                    print("line 228")
+
+                    # embed message builder
+                    embed = nextcord.Embed(
+                        title="Success!",
+                        description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
+                        color=int(randomColor.replace("#", ""), 16)
+                    )
+                    await context.send(embed=embed)
+            else:
+                contrast = self.contrast("#36393f", color)
+
+                if contrast < limit:
+                    embed = nextcord.Embed(
+                        title="Error",
+                        description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above 4:1.",
+                        color=int(color.replace("#", ""), 16)
+                    )
+                    await context.send(embed=embed)
+                    return
+
+                if len(userRoles) > 1:
+                    topRole = userRoles[-1]
+                    await topRole.edit(colour=nextcord.Colour(int(color.replace("#", ""), 16)))
+                    embed = nextcord.Embed(
+                        title="Success!",
+                        description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
+                        color=int(color.replace("#", ""), 16)
+                    )
+                    await context.send(embed=embed)
+                    
         except:
             embed = nextcord.Embed(
                 title="Error",
