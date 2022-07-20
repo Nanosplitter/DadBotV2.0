@@ -246,8 +246,6 @@ class general(commands.Cog, name="general"):
                     topRole = userRoles[-1]
                     await topRole.edit(colour=nextcord.Colour(int(randomColor.replace("#", ""), 16)))
 
-                    print("line 228")
-
                     # embed message builder
                     embed = nextcord.Embed(
                         title="Success!",
