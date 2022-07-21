@@ -237,16 +237,7 @@ class general(commands.Cog, name="general"):
                     if contrast > limit:
                         chosenColor = randomColor
                         break
-                # apply color
-                topRole = userRoles[-1]
-                await topRole.edit(colour=nextcord.Colour(int(randomColor.replace("#", ""), 16)))
 
-                # embed message builder
-                embed = nextcord.Embed(
-                    title="Success!",
-                    description="Color has been changed! The hex value is: " + randomColor + ". The contrast ratio is: " + str(round(contrast, 4)) + ":1",
-                    color=int(randomColor.replace("#", ""), 16)
-                )
 
                 color_button = Button(label="New Color", style=nextcord.ButtonStyle.blurple)
 
@@ -274,11 +265,7 @@ class general(commands.Cog, name="general"):
                         )
                         await interaction.message.edit(embed=newEmbed)  # modify existing embed
                 
-                color_button.callback = color_callback
-                view = View(timeout=1000)
-                view.add_item(color_button)
 
-                await context.send(embed=embed, view=view)
             else:
                 contrast = self.contrast("#36393f", color)
 
@@ -290,18 +277,36 @@ class general(commands.Cog, name="general"):
                     )
                     await context.send(embed=embed)
                     return
-
-                if len(userRoles) > 1:
-                    topRole = userRoles[-1]
-                    await topRole.edit(colour=nextcord.Colour(int(color.replace("#", ""), 16)))
-                    embed = nextcord.Embed(
-                        title="Success!",
-                        description="Color has been changed! The contrast it has is " + str(round(contrast, 4)) + ":1",
-                        color=int(color.replace("#", ""), 16)
-                    )
-                    await context.send(embed=embed)
                     
-        except:
+            # apply color
+            if len(userRoles) > 1:
+                topRole = userRoles[-1]
+                await topRole.edit(colour=nextcord.Colour(int(chosenColor.replace("#", ""), 16)))
+
+                # embed message builder
+                embed = nextcord.Embed(
+                    title="Success!",
+                    description="Color has been changed! The hex value is: " + chosenColor + ". The contrast ratio is: " + str(round(contrast, 4)) + ":1",
+                    color=int(chosenColor.replace("#", ""), 16)
+                )
+
+                if color.lower() == "random":
+                    color_button.callback = color_callback
+                    view = View(timeout=1000)
+                    view.add_item(color_button)
+                    await context.send(embed=embed, view=view)
+                else:
+                    await context.send(embed=embed)
+            else:
+                embed = nextcord.Embed(
+                    title = "Error!",
+                    description = "The user has only one role. Color cannot be changed with this command.",
+                    color = config["error"]
+                )
+                await context.send(embed=embed)
+                    
+        except Exception as e:
+            print(e)
             embed = nextcord.Embed(
                 title="Error",
                 description="Something went wrong, make sure you are using a 6 digit hex code. (ex: !changecolor #FFFFFF)",
