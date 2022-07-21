@@ -261,7 +261,7 @@ class general(commands.Cog, name="general"):
                 
             else:   # if message value after !changecolor is not "random"
                 contrast = self.contrast("#36393f", color)
-
+                chosenColor = color
                 if contrast < limit:
                     embed = nextcord.Embed(
                         title="Error",
