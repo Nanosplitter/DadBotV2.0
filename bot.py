@@ -25,6 +25,7 @@ with open("config.yaml") as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 intents = nextcord.Intents.default()
+intents.message_content = True
 
 bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
 
@@ -121,15 +122,15 @@ async def on_command_error(context, error):
         await context.send(embed=embed)
     raise error
 
-@tasks.loop(seconds=5)
-async def checkTimes():
-    await reminderChecker.checkReminders(bot)
-    await reminderChecker.deleteOldReminders(bot)
+# @tasks.loop(seconds=5)
+# async def checkTimes():
+#     await reminderChecker.checkReminders(bot)
+#     await reminderChecker.deleteOldReminders(bot)
 
-checkTimes.start()
-scheduler = AsyncIOScheduler()
-scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "18", minute = "0", second = "0", timezone="EST"))
-scheduler.add_job(birthdayChecker.checkBirthdays, CronTrigger(hour = "9", minute = "0", second = "0", timezone="EST"))
-scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="wed", hour = "23", minute = "0", second = "0", timezone="EST"))
-scheduler.start()
+# checkTimes.start()
+# scheduler = AsyncIOScheduler()
+# scheduler.add_job(scooby.whatsTheMove, CronTrigger(hour = "18", minute = "0", second = "0", timezone="EST"))
+# scheduler.add_job(birthdayChecker.checkBirthdays, CronTrigger(hour = "9", minute = "0", second = "0", timezone="EST"))
+# scheduler.add_job(scooby.praiseFireGator, CronTrigger(day_of_week="wed", hour = "23", minute = "0", second = "0", timezone="EST"))
+# scheduler.start()
 bot.run(config["token"])
