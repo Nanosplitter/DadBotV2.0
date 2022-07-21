@@ -221,16 +221,14 @@ class general(commands.Cog, name="general"):
         """
         Allows the user to change the color of their nickname. Only usable in some servers.
         """
-        chosenColor = ""
-        limit = 4 # set this to determine the minimum contrast ratio
         try:
-            # if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
-            #     return
+            if context.message.guild.id != 856919397754470420 and context.message.guild.id != 850473081063211048:
+                return
+            chosenColor = ""
+            limit = 4 # set this to determine the minimum contrast ratio
             userRoles = context.message.author.roles
 
-            if color.lower() == "random":
-                # if color == random, then pick a ranomized color value and apply
-                # logic for random color
+            if color.lower() == "random":   # if message value after !changecolor is "random"
                 while True:
                     randomColor = self.generateRandomColor()
                     contrast = self.contrast("#36393f", randomColor)
@@ -238,52 +236,45 @@ class general(commands.Cog, name="general"):
                         chosenColor = randomColor
                         break
 
-
-                color_button = Button(label="New Color", style=nextcord.ButtonStyle.blurple)
+                color_button = Button(label="New Color", style=nextcord.ButtonStyle.blurple)    # creates post-embed button
 
                 async def color_callback(interaction):
-                    if interaction.user == context.author:
-                        # re-generate a random color and print new success message
-                        randomColor = self.generateRandomColor()
-                        contrast = self.contrast("#36393f", randomColor)
-
-                        if contrast < limit:
-                            # generate new colors and test until contrast > limit
-                            while(contrast < limit):
-                                randomColor = self.generateRandomColor()
-                                contrast = self.contrast("#36393f", randomColor)
-
-                        # apply color
+                    """
+                    Method to execute when the "new color" button is clicked 
+                    """
+                    if interaction.user == context.author:  # checks that user interacting with button is command sender
+                        while True:
+                            randomColor = self.generateRandomColor()
+                            contrast = self.contrast("#36393f", randomColor)
+                            if contrast > limit:
+                                break
+                            
                         topRole = userRoles[-1]
-                        await topRole.edit(colour=nextcord.Colour(int(randomColor.replace("#", ""), 16)))
+                        await topRole.edit(colour=nextcord.Colour(int(randomColor.replace("#", ""), 16)))   # changes top role of user
 
-                        # change embed to contain new hex value
-                        newEmbed = nextcord.Embed (
+                        newEmbed = nextcord.Embed ( # create new embed
                             title="Success!",
-                            description="Color has been changed! The hex value is " + randomColor + ". The contrast it has is " + str(round(contrast, 4)) + ":1",
+                            description="Color has been changed! The hex value is: " + randomColor + ". The contrast ratio is: " + str(round(contrast, 4)) + ":1",
                             color=int(randomColor.replace("#", ""), 16)
                         )
                         await interaction.message.edit(embed=newEmbed)  # modify existing embed
                 
-
-            else:
+            else:   # if message value after !changecolor is not "random"
                 contrast = self.contrast("#36393f", color)
 
                 if contrast < limit:
                     embed = nextcord.Embed(
                         title="Error",
-                        description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above 4:1.",
+                        description="Color does not have enough contrast. That color has a contrast ratio of: " + str(round(contrast, 4)) + ":1. It needs to be above " + limit + ":1.",
                         color=int(color.replace("#", ""), 16)
                     )
                     await context.send(embed=embed)
                     return
                     
-            # apply color
             if len(userRoles) > 1:
                 topRole = userRoles[-1]
                 await topRole.edit(colour=nextcord.Colour(int(chosenColor.replace("#", ""), 16)))
 
-                # embed message builder
                 embed = nextcord.Embed(
                     title="Success!",
                     description="Color has been changed! The hex value is: " + chosenColor + ". The contrast ratio is: " + str(round(contrast, 4)) + ":1",
@@ -305,7 +296,7 @@ class general(commands.Cog, name="general"):
                 )
                 await context.send(embed=embed)
                     
-        except Exception as e:
+        except Exception as e:  # generic error in discord, printed error in console
             print(e)
             embed = nextcord.Embed(
                 title="Error",
