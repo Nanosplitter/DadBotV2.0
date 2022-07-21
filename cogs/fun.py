@@ -24,7 +24,7 @@ with open("config.yaml") as file:
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.bot = bot
-        with open("./resources/emoji-mappings.json") as file:
+        with open("./resources/emoji-mappings.json", encoding="utf8") as file:
             self.emoji_mappings = json.load(file)
 
     @commands.command(name="randomfact")
